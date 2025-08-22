@@ -33,32 +33,30 @@
     /* ==========================================================================
        2. NAVBAR (Gaya Korporat Baru)
        ========================================================================== */
-    .navbar {
+   .navbar {
       display: flex; align-items: center; justify-content: space-between;
       background-color: #fff; border-bottom: 1px solid #ddd;
-      padding: 10px 40px; position: sticky; top: 0; z-index: 1001;
+      padding: 10px 40px; position: sticky; top: 0; z-index: 1000;
+      flex-shrink: 0;
     }
     .navbar-left { display: flex; align-items: center; gap: 15px; }
     .logo-img { height: 60px; }
     .company-name { 
-        font-size: 17px; font-weight: 700; color: #112a45; line-height: 1.2;
-    }
-    .company-name .sub-line {
-        font-size: 0.9em; font-weight: 600; color: #555;
+        font-size: 20px; 
+        font-weight: 700; 
+        color: #112a45;
+        white-space: nowrap;
     }
     .navbar-right { display: flex; align-items: center; gap: 10px; }
     .navbar-right a, .dropbtn {
       text-decoration: none; color: #112a45; font-size: 14px; font-weight: 600;
       padding: 8px 12px; border-radius: 6px; transition: background-color 0.3s, color 0.3s;
-      white-space: nowrap;
     }
     .navbar-right a:hover, .dropbtn:hover {
-      background-color: #fef0e8;
-      color: #F37021;
+      background-color: #fef0e8; color: #F37021;
     }
     .navbar-right a.active {
-        background-color: #F37021;
-        color: #fff;
+        background-color: #F37021; color: #fff;
     }
     .divider { color: #ddd; }
     .dropdown { position: relative; }
@@ -149,7 +147,7 @@
     .page-section details[open] > summary::before { transform: rotate(90deg); }
     .accordion-content { padding: 10px 20px 20px 40px; }
 
-    /* --- REVISI: Styling untuk Nested Accordion --- */
+    /* --- Styling untuk Nested Accordion --- */
     .nested-accordion {
         background: #f8f9fa;
         border: 1px solid #eee;
@@ -162,29 +160,34 @@
         padding: 12px 15px;
     }
     .nested-accordion .nested-content {
-        padding: 0 15px 15px 30px;
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
+        padding: 0 15px 15px 15px;
     }
-    .spec-item {
-        border-bottom: 1px solid #e9ecef;
-        padding-bottom: 10px;
-    }
-    .spec-item:last-child {
-        border-bottom: none;
-        padding-bottom: 0;
-    }
-    .spec-item h4 {
-        font-size: 15px;
-        font-weight: 700;
-        color: #112a45;
-        margin-bottom: 5px;
-    }
-    .spec-item p {
+
+    /* === Styling untuk Tabel Spesifikasi === */
+    .spec-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
         font-size: 14px;
-        color: #555;
-        white-space: pre-line; /* Menjaga line break dari teks */
+    }
+    .spec-table th, .spec-table td {
+        padding: 10px 12px;
+        text-align: left;
+        border-bottom: 1px solid #e9ecef;
+        white-space: pre-wrap; /* Mengizinkan line break dari teks */
+        vertical-align: top;
+    }
+    .spec-table th {
+        background-color: #f1f3f5;
+        font-weight: 600;
+        color: #333;
+    }
+    .spec-table td:first-child {
+        color: #112a45;
+        font-weight: 600;
+    }
+    .spec-table tbody tr:hover {
+        background-color: #fef0e8;
     }
 
     /* ==========================================================================
@@ -266,129 +269,1392 @@
         <tr><td>GW 123</td><td>2000 HP</td><td>Shengli Oilfield Highland Petroleum Equipment Co., Ltd</td><td><span class="status-badge">Available</span></td><td>Onshore</td></tr>
         <tr><td>GW 207</td><td>2000 HP</td><td> Baoji Oilfield Machinery Co., Ltd.</td><td><span class="status-badge">Available</span></td><td>Onshore</td></tr>
         <tr><td>GW 265</td><td>2000 HP</td><td> China Petroleum Liaohe Equipment Company</td><td><span class="status-badge">Available</span></td><td>Onshore</td></tr>
-        <tr><td>GW 336</td><td>-</td><td>-</td><td><span class="status-badge">Available</span></td><td>Onshore</td></tr>
-        <tr><td>GW 337</td><td>-</td><td>-</td><td><span class="status-badge">Available</span></td><td>Onshore</td></tr>
-        <tr><td>GW 338</td><td>-</td><td>-</td><td><span class="status-badge">Available</span></td><td>Onshore</td></tr>
-        <tr><td>GW 339</td><td>-</td><td>-</td><td><span class="status-badge">Available</span></td><td>Onshore</td></tr>
+        <tr><td>GW 336</td><td>1500 HP</td><td>-</td><td><span class="status-badge">Available</span></td><td>Onshore</td></tr>
+        <tr><td>GW 337</td><td>1500 HP</td><td>-</td><td><span class="status-badge">Available</span></td><td>Onshore</td></tr>
+        <tr><td>GW 338</td><td>1500 HP</td><td>-</td><td><span class="status-badge">Available</span></td><td>Onshore</td></tr>
+        <tr><td>GW 339</td><td>1500 HP</td><td>-</td><td><span class="status-badge">Available</span></td><td>Onshore</td></tr>
       </tbody>
     </table>
   </div>
 </div>
 
-<div class="page-section fade-in-section">
-  <h2>Rig Specification Details</h2>
-  
-  <details>
-    <summary><strong>GW 16</strong> (2000 HP Land Rig)</summary>
-    <div class="accordion-content">
+<div id="rigDetailsSection" class="page-section fade-in-section">
+    <h2>Rig Specification Details</h2>
+    
+    <details>
+      <summary><strong>GW 16</strong> (2000 HP Land Rig)</summary>
+      <div class="accordion-content">
+        <details class="nested-accordion">
+            <summary>Hoisting System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th>
+                    <th>Total Equipment</th>
+                    <th>Details</th></tr></thead>
+                  <tbody>
+                      <tr><td>Mast</td>
+                        <td>1</td>
+                        <td>Manufacture: Baoji Oilfields Machinery Co. Ltd.
+Model : JJ450/45-K5
+Height : 147 ft / 45 meter
+Max. Hook Load : 4500 kN</td></tr>
+                      <tr><td>Substructure</td>
+                        <td>1</td>
+                        <td>Manufacture : Baoji Oilfields Machinery Co. Ltd.
+Model : DZ450/10.5-S7
+Height : 10,5 meter
+Max. Hook Load : 4500 kN</td></tr>
+                      <tr><td>Drawworks</td>
+                        <td>1</td>
+                        <td>Manufacture : Baoji Oilfields Machinery Co. Ltd.
+Model : JC-70D
+Daya : 2000 HP</td></tr>
+                      <tr><td>Crown Block</td>
+                        <td>1</td>
+                        <td>Manufacture : Baoji Oilfirlo Machinery Co., Ltd.
+Model : TC7-450
+Serial Number : BE09-009
+Capacity : 4500 KN
+Year : 2009</td></tr>
+                      <tr><td>Traveling Block & Hook</td>
+                        <td>1</td>
+                        <td>Manufacture : Baoji Oilfirlo Machinery Co., Ltd
+Model : YC450-2
+Serial Number : 450-11
+Capacity : 4500 KN
+Number of Sheaves : 6</td></tr>
+                      <tr><td>Drilling Line</td>
+                        <td>1</td>
+                        <td>Manufacture : Xianyang Bomco Steel Tube & Wire Rope Co., Ltd.
+Model: Ø 1-1/2 Inch, 6x19S-IWRC EIP U sZ, 12 Lines
+Certificate No : Z22A01971</td></tr>
+                      <tr><td>Weight Indicator</td>
+                        <td>2</td>
+                        <td>Manufacture : CSY
+Serial Number : S0808120 / S1308187
+Capacity : 0 – 870 Psi
+Certificate No : C-22.11-1329 / C-22.11-1350</td></tr>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Rotating System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th>
+                    <th>Total Equipment</th>
+                <th>Details</th></tr></thead>
+                  <tbody>
+                      <tr><td>Top Drive</td>
+                        <td>1</td>
+                            <td>Manufacture : National Oilwell Varco
+Model : TDS-11HD
+Capacity : 500 Ton</td></tr>
+                      <tr><td>Rotary Swivel</td>
+                        <td>1</td>
+                            <td>Manufacture : Shengli Oilfield Highland Petroleum Equipment Co., Ltd.
+Model : ZP375
+Serial Number : 38060404
+Max Rated Static Rotary Capacity : 5850 KN</td></tr>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Well Control System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th>
+                    <th>Total Equipment</th>
+                    <th>Details</th></tr></thead>
+                  <tbody>
+                     <tr><td>Single RAM BOP</td>
+                        <td>1</td>
+                        <td>Single Ram 13-5/8” x 10000 psi
+Manufacture : Rongsheng
+Model : FZ 35 - 70
+Serial Number : 2014 - 042
+COC No. 024 - IPE / COC - BOP / IX - 22
+Tanggal 9 September 2022 oleh PT Internusa Pertama Energi</td></tr>
+                      <tr><td>Annular BOP</td>
+                        <td>3</td>
+                        <td>Annular 13-5/8” x 5000 psi
+Manufacture : Rongsheng
+Model : FH 35 - 35 / 70
+No. Body : 14 - 048
+COC No. 020 - IPE / COC - BOP / IX - 22
+Tanggal 8 September 2022 oleh PT Internusa Pertama Energi
+Annular 20-3/4” x 3000 psi
+Manufacture : Rongsheng
+Model : FH 53 - 21
+Serial Number : 2014 - 006
+COC No. 022 - IPE / COC - BOP / IX - 22
+Tanggal 7 September 2022 oleh PT Internusa Pertama Energi
+Diverter 29-1/2” x 500 psi
+Manufacture : Rongsheng
+Model : FFZ 75 - 3.5
+Serial Number : 00-01
+COC No. 025 - IPE / COC - BOP / IX - 22
+Tanggal 9 September 2022 oleh PT Internusa Pertama Energi</td></tr>
+                      <tr><td>Double RAM BOP</td>
+                        <td>2</td>
+                        <td>Double Ram 13-5/8” x 10000 psi
+Manufacture : Rongsheng
+Model : 2FZ 35 - 70
+Serial Number : 2014 - 048 COC No. 021 - IPE / COC - BOP / IX - 22
+Tanggal 8 September 2022 oleh PT Internusa Pertama Energi
+Double Ram 20-3/4” x 3000 psi
+Manufacture : Rongsheng
+Model : 2 FZ 53 - 21
+erial Number : 2014 - 007
+COC No. 023 - IPE / COC - BOP / IX - 22
+Tanggal 7 September 2022 oleh PT Internusa Pertama Energi</td></tr>
+                      <tr><td>BOP Accumulator</td>
+                        <td>1</td>
+                        <td>Manufacture : Beijing Petroleum Machinery Factory
+Model : FKQ800-7B
+Serial Number : C1009032-1
+Working Pressure : 21 MPa
+Number of bottle : 20 Bottle
+COI No. 047.TSI-COI-M/PV/223-0.23
+tgl 13 Maret 2023 oleh PT Titis Sampurna Inspection</td></tr>
 
-      <details class="nested-accordion">
-        <summary>Hoisting System</summary>
-        <div class="nested-content">
-          <div class="spec-item">
-            <h4>Mast</h4>
-            <p>Manufacture: Baoji Oilfield Machinery Co., Ltd.
-Type: Land Rig
-Model: JJ450/45-K5
-Serial Number: 4500-01
-Height: 46,5 meter
-Max. Hook Load: 449 Metric Ton (4500 KN)</p>
-          </div>
-          <div class="spec-item">
-            <h4>Substructure</h4>
-            <p>Manufacture: Baoji Oilfield Machinery Co., Ltd.
-Model: DZ450/9-S4
-Height: 9 meter</p>
-          </div>
-          <div class="spec-item">
-            <h4>Drawworks</h4>
-            <p>Manufacture: Baoji Oilfield Machinery Co., Ltd.
-Model: JC-70D
-Power: 2000 HP</p>
-          </div>
-           <div class="spec-item">
-            <h4>Crown Block</h4>
-            <p>Manufacture: Baoji Oilfield Machinery Co., Ltd.
-Model: TC7-450
-Capacity: 4500 KN</p>
-          </div>
-        </div>
-      </details>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Power System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th>
+                    <th>Total Equipment</th>
+                    <th>Details</th></tr></thead>
+                  <tbody>
+                      <tr><td>Engine Prime Mover</td>
+                        <td>4</td>
+                        <td>Manufacture : Caterpillar
+Model : CAT 3512, 4 ea
+Serial Number : LE500101 / 1KZ05192 / 1KZ02516 / 1KZ02649
+Power : 1090 kW at 1500 RPM</td></tr>
+                      <tr><td>Generator Set</td>
+                        <td>4</td>
+                        <td>Manufacture : Caterpillar
+Volts / Amps : 600 V, 1374 A Phase : 3
+Serial Number : A4A00539 / 3WF01012 / 3WF00991 / 3WF00693
+Rotation Speed of 1500 RPM</td></tr>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Circulating System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th>
+                    <th>Total Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                      <tr><td>Mud Pump</td>
+                        <td>3</td><td>Manufacture : Baoji Oilfield Machinery Co., Ltd.
+Type : Triplex Pump F-1600, 3 ea
+Serial Number : BF07.087 / BZ13-028 / BZ13-029
+Working Pressure : 5000 ps</td></tr>
+                      <tr><td>Mud Tank</td>
+                        <td>6</td><td>Manufacture : Baoji Oilfeild Machinery Co., Ltd.
+Used To : 1ea Shaker Tank, 15ea Mud Agitator, 1 ea Intermediate Tank, 1ea Active Tank, 1 ea Reserve Tank and 1ea Trip Tank
+Capacity : 572,64 bbl</td></tr>
+                      <tr><td>Mud Gas Seperator</td>
+                        <td>1</td><td>Manufacture : Bohai Equipment Zhongcheng Equipment
+Model : YQF-8000/1.5
+Working Pressure : 1.5 MPa</td></tr>
+                      <tr><td>Shale Shaker</td>
+                        <td>3</td><td>Manufacture : Derrick
+Type : Panel drop deck shaker FLC-500
+Capacity : 120 m3/h Total
+Max Flow Rate : 1500 GPM</td></tr>
+                      <tr><td>Desander</td>
+                        <td>1</td><td>Manufacture : Chengdu West Petroleum Equipment Co., Ltd.
+Type : ZQ300X2/100X14
+Capacity : 240 m3/h</td></tr>
+                      <tr><td>Desilter</td>
+                        <td>1</td><td>Manufacture : Chengdu West Petroleum Equipment Co., Ltd.
+Type : LWG450X1000-NY
+Capacity : 240 m3/h</td></tr>
+                      <tr><td>Degaser</td>
+                        <td>1</td><td>Manufacture : Chengdu West Petroleum Equipment Co., Ltd.
+Type : ZSCQ/240
+Capacity : 240 m3/h</td></tr>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Safety Equipment</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th>
+                    <th>Total Equipment</th>
+                    <th>Details</th></tr></thead>
+                  <tbody>
+                      <tr><td>Portable Fire Extinguisher</td>
+                        <td>107</td>
+                        <td>Dry Chemical Powder 100 lbs, 6 unit 
+Dry Chemical Powder 5 kg, 25 unit
+Carbon Dioxide 3 kg, 74 unit</td></tr>
+                      <tr><td>Safety Shower & Eye Washer</td>
+                        <td>5</td>
+                        <td>Manufacture : MSA
+Model : 7461</td></tr>
+                      <tr><td>Multi Gas Detector</td>
+                        <td>9</td>
+                        <td>Manufacture : MSA, 7ea / ALTAIR 4X, 2ea
+Type : Multi Gas Detector
+Serial Number : 190211469 / 190313564 / 190312651 / 190211400 / 201119-23026 / 8-01/19-23025 / 141375049 / 02001623 / 02001624 /</td></tr>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+      </div>
+    </details>
 
-      <details class="nested-accordion">
-        <summary>Rotating System</summary>
-        <div class="nested-content">
-           <div class="spec-item">
-            <h4>Top Drive</h4>
-            <p>Manufacture: National Oilwell Varco
-Model: TDS-11HD
-Capacity: 500 Ton</p>
-          </div>
-           <div class="spec-item">
-            <h4>Rotary Table</h4>
-            <p>Manufacture: Shengli Oilfield Highland Petroleum Equipment Co., Ltd.
-Model: ZP375
-Max Rated Static Rotary Capacity: 5850 KN</p>
-          </div>
-        </div>
-      </details>
+    <details>
+      <summary><strong>GW 121</strong> (2000 HP Land Rig)</summary>
+      <div class="accordion-content">
+        <details class="nested-accordion">
+            <summary>Hoisting System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th>
+                    <th>Total Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                      <tr><td>Mast</td>
+                        <td>1</td>
+                        <td>Manufacture: Baoji Oilfields Machinery Co. Ltd.
+Model : JJ450/45-K5
+Height : 147 ft / 45 meter
+Max. Hook Load : 4500 kN</td></tr>
+                      <tr><td>Mast</td>
+                        <td>1</td>
+                        <td>Manufacture: Baoji Oilfields Machinery Co. Ltd.
+Model : JJ450/45-K5
+Serial Number : JG03-010
+Height : 147 ft / 45 meter
+Max. Hook Load : 4500 kN / 458,87 Metric ton
+Wind resistance capacity : 70 Knots with Set Back and 93 Knot without Set Back
+Year : 2003</td></tr>
+                      <tr><td>Substructure</td>
+                        <td>1</td>
+                        <td>Manufacture : Baoji Oilfields Machinery Co. Ltd.
+Model Serial Number : DZ450/10.5-S7 : JG03-002
+Height : 10,5 meter
+Max. Hook Load : 4500 kN
+Year : 2003N</td></tr>
+                      <tr><td>Crown Block</td>
+                        <td>1</td>
+                        <td>Manufacture : Baoji Oilfields Machinery Co. Ltd.
+Model : TC450
+Serial Number : E03-008
+Capacity : 4500 kN
+Year : 2003</td></tr>
+                      <tr><td>Drawworks</td>
+                        <td>1</td>
+                        <td>Manufacture : Baoji Oilfields Machinery Co. Ltd.
+Model : JC-70D
+Serial Number : 003-02
+Daya : 2000 HP
+Year : 2003</td></tr>
+                      <tr><td>Drawworks Prime Mover</td>
+                        <td>2</td>
+                        <td>Manufacture : Yongji
+Model : YZ08A
+Serial Number : 108A3063
+Rate Power : 800 KW / 1072,32 HP/750V-1150A
+Year : 2003</td></tr>
+                      <tr><td>Traveling Block</td>
+                        <td>1</td>
+                        <td>Manufacture : Baoji Oilfields Machinery Co. Ltd.
+Model : YC-450
+Serial Number : 2003-002
+Capacity : 250 Ton
+Number of Sheaves : 5 x 760 mm (30 in)</td></tr>
+                      <tr><td>Air Winch</td>
+                        <td>2</td>
+                        <td>Manufacture : Ningbo Bonny Hydraulics Transmission Co. Ltd.
+Model : YJ-3T / YJ-5T
+Serial Number : -
+Capacity : 30 kN / 50 kN
+Year : 2003</td></tr>
+                      <tr><td>Drilling Line</td>
+                        <td>1</td>
+                        <td>Manufacture : Usha Siam Steel
+Size : Ø 1-1/2” (38 mm)
+Certificate Number : E-1920-0801
+Nominal Length : 1x1200 m
+Date : 2019</td></tr>
+                      <tr><td>Deadline Anchor</td>
+                        <td>1</td>
+                        <td>Manufacturer : Hubei Jianghan Petroleum Instrument
+Model : JZG41
+Serial Number : A0702
+Capacity : 410kN90.000 Lbs
+Year : 2009</td></tr>
+                      <tr><td>Weight Indicator</td>
+                        <td>1</td>
+                        <td>Manufacture : Changing Petroleum Instrument
+Model : analog
+Serial Number : CYD00331
+Certificate Number : 1277/XI/K/ESAKA/2023
+Date : 06 November 2023, PT. Esa Jaya Kalibrasi</td></tr>
 
-      <details class="nested-accordion">
-        <summary>Well Control System</summary>
-        <div class="nested-content">
-          <div class="spec-item">
-            <h4>Annular BOP</h4>
-            <p>1. Annular 13-5/8” x 5000 psi, Manufacture: Rongsheng
-2. Annular 20-3/4” x 3000 psi, Manufacture: Rongsheng
-3. Diverter 29-1/2” x 500 psi, Manufacture: Rongsheng</p>
-          </div>
-           <div class="spec-item">
-            <h4>Ram BOP</h4>
-            <p>Single Ram 13-5/8” x 10000 psi
-Double Ram 13-5/8” x 10000 psi
-Double Ram 20-3/4” x 3000 psi</p>
-          </div>
-        </div>
-      </details>
-      
-      <details class="nested-accordion">
-        <summary>Power System</summary>
-        <div class="nested-content">
-          <div class="spec-item">
-            <h4>Engine Prime Mover</h4>
-            <p>Manufacture: Caterpillar
-Model: CAT 3512, 4 ea
-Power: 1090 kW at 1500 RPM</p>
-          </div>
-           <div class="spec-item">
-            <h4>Generator Set</h4>
-            <p>Manufacture: Caterpillar
-Volts / Amps: 600 V, 1374 A, Phase: 3</p>
-          </div>
-        </div>
-      </details>
-      
-    </div>
-  </details>
-  </div>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Rotating System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Total Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                      <tr><td>Rotary Table</td>
+                        <td>1</td><td>Manufacture : Baoji Oilfields Machinery Co. Ltd.
+Model : ZP375
+Serial Number : 03-12
+Capacity : 5850 kN
+Opening Diameter : 23-1/2 Inch
+Year : 2003</td></tr>
+                      <tr><td>Rotary Swivel</td>
+                        <td>1</td><td>Manufacture : Lanzhou LS – National Oilwell Petroleum
+Model : SL450-5
+Serial Number : 102.18
+Capacity : 4500 kN, WP 5000 Psi
+Year : 2002</td></tr>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Well Control System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th>
+                    <th>Total Equipment</th>
+                    <th>Details</th></tr></thead>
+                  <tbody>
+                      <tr><td>Single RAM BOP</td>
+                        <td>1</td>
+                        <td>BOP Single Ram : 13-5/8” x 10000 Psi
+Manufacture : Rongsheng Machinery Manufacture Ltd
+Serial Number : 2004-04
+COC No. : 031/COC/A/GWD/IV/2023
+Date : 14 April 2023, PT. Besmindo Borneo Semesta</td></tr>
+                      <tr><td>Annular BOP</td>
+                        <td>2</td>
+                        <td>BOP Annular : 21-1/4” x 2000 Psi
+Manufacture : Rongsheng Machinery Manufacture Ltd
+Serial Number : 2003-02
+COC No. : 028/COC/A/GWD/IV/2023
+Date : 12 April 2023, PT. Besmindo Borneo Semesta
+BOP Annular : 13-5/8” x 5000 Psi
+Manufacture : Rongsheng Machinery Manufacture Ltd
+Serial Number : 2004-15
+COC No : 029/COC/A/GWD/IV/2023.
+Date : 13 April 2023, PT. Besmindo Borneo Semesta</td></tr>
+                      <tr><td>Double RAM BOP</td>
+                        <td>1</td>
+                        <td>BOP Double Ram : 13-5/8” x 10000 Psi
+Manufacture : Rongsheng Machinery Manufacture Ltd
+Serial Number : 2008-38
+COC No : 030/COC/A/GWD/IV/2023.
+Date : 14 April 2023, PT. Besmindo Borneo Semesta</td></tr>
+                      <tr><td>Accumulator Unit</td>
+                        <td>1</td>
+                        <td>Manufacture : Beijing Petroleum
+Model : FKQ1280-7S
+Serial Number : C0512063-2
+Pressure max : 21 MPa / 3000 Psi
+Start Pressure : 1000 Psi
+No. Bottles Installed : 16 Bottles
+COI No. : 539.TSI-COI-M/PV/101-10.24
+Date COI : 14Oktober 2024
+Diperiksa & diterbitkan oleh : PT Titis Sampurna Inspection</td></tr>
+                      <tr><td>Choke & Kill Manifold</td>
+                        <td>1</td>
+                        <td>Manufacture : CKPM Co. Ltd.
+Model : -
+Size : 4-1/16” Super Choke
+MAWP : 1000 Psi</td></tr>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Power System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th>
+                    <th>Total Equipment</th>
+                    <th>Details</th></tr></thead>
+                  <tbody>
+                      <tr><td>Generator Set</td>
+                        <td>4</td>
+                        <td>Manufacture : Caterpillar 
+Model : 3512A
+Volt Ampere : 1457 kVA / 460 V / 50Hz
+Rotation Speed : 1457 kVA / 460 V / 50Hz</td></tr>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Circulating System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th>
+                    <th>Total Equipment</th>
+                    <th>Details</th></tr></thead>
+                  <tbody>
+                      <tr><td>Mud Pump</td>
+                        <td>3</td>
+                        <td>Manufacture : Baoji Oilfield Machinery Co. Ltd.
+Type : Triplex Pump
+Model : F1600
+Serial Number : 03-033
+MAWP : 5000 Psi / 1600HP</td></tr>
+                      <tr><td>Mud Pump</td>
+                        <td>3</td>
+                        <td>Manufacture: Baoji Oilfield Machinery Co. Ltd.
+Type : Triplex Pump, Model : F1600
+MAWP : 5000 Psi / 1600HP</td></tr>
+                      <tr><td>Mud Tank</td>
+                        <td>7</td>
+                        <td>Manufacture : -
+Unit : Mixing tank, Slug pit, active tank
+Total Capacity : 1000 bbl</td></tr>
+                      <tr><td>Mud Pump Prime Mover</td>
+                        <td>3</td>
+                        <td>Manufacture : Bomco
+Model : traction motor
+Serial Number : -
+Power : 1600HP</td></tr>
+                      <tr><td>Shale Shaker</td>
+                        <td>3</td>
+                        <td>Manufacture : Derick.
+Model : FLC503
+Serial Number : -
+Motor Power : : 380V/50Hz ﻿</td></tr>
+                      <tr><td>Mud Cleaner</td>
+                        <td>3</td>
+                        <td>Manufacture : Zhongme.
+Model : QJZ-300
+Serial number : 114601
+Max Dimension : 3350x2100x2950</td></tr>
+                      <tr><td>Degasser</td>
+                        <td>1</td>
+                        <td>Manufacture : Zhongcheng Machinery Manufacture
+Model : vertical Degasser
+Serial Number : 09.01
+Motor Power : 380V/50Hz</td></tr>
+                      <tr><td>Mud Gas Separator</td>
+                        <td>1</td>
+                        <td>Manufacture : Zhongcheng Machinery Manufacture
+Model : YQF-8000
+Serial Number : 04.3.4
+Working Capacity : 4 Mpa
+size : 2435x2435x7285 mm</td></tr>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Safety Equipment</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th>
+                    <th>Total Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                      <tr><td>APAR</td>
+                        <td>107</td>
+                        <td>Dry Chemical Powder 100 lbs : 6 Unit
+Dry Chemical Powder 5 kg : 25 Unit
+Carbon Dioxide 3 kg : 74 Unit</td></tr>
+                      <tr><td>Safety Retracting Life Line</td>
+                        <td>5</td>
+                        <td>Manufacture : MSA
+Model : 7461</td></tr>
+                      <tr><td>Gas Detector</td>
+                        <td>9</td>
+                        <td>Manufacture : MSA 7ea / ALTAIR 4X, 2ea
+Type : Multi Gas Detector)</td></tr>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+      </div>
+    </details>
+
+    <details>
+      <summary><strong>GW 123</strong> (2000 HP Land Rig)</summary>
+      <div class="accordion-content">
+        <details class="nested-accordion">
+            <summary>Hoisting System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th>
+                    <th>Total Equipment</th>
+                    <th>Details</th></tr></thead>
+                  <tbody>
+                      <tr><td>Mast</td>
+                        <td>1</td>
+                        <td>Manufacture : Shengli Oilfield Highland Petroleum
+Model : JJ450/45.5-K-2
+Serial Number : 191104
+Height : 45,5 Meter
+Max. hook load : 4500 kN ~ 458,87 Ton
+Year : 2009</td></tr>
+                      <tr><td>Substructure</td>
+                          <td>1</td>
+                          <td>Manufacture : Shengli Oilfield Highland Petroleum
+Model : DZ450/10.5-X 
+Serial Number : 191103
+Capacity : 458,87 Ton
+Year : 2009</td></tr>
+                      <tr><td>Drawworks</td>
+                          <td>1</td>
+                          <td>Manufacture : Shengli Oilfield Highland Petroleum
+Model : JC70D01
+Serial Number : 191102
+HP : 1470 kW (2000 HP)
+Year : 2009</td></tr>
+                      <tr><td>Drawworks Engines</td>
+                          <td>2</td>
+                          <td>Manufacture : Yongji Xinshisu Electric Equipment Co., Ltd.
+Type Electric Motor : DC Drilling Motor
+Model Electric Motor : YZ08
+Rated Electric Motor : 800 kW
+Volts : 750 V
+Amps DC : 1150 A
+Serial number : 108110194, 108A80289</td></tr>
+                      <tr><td>Crown Block</td>
+                          <td>1</td>
+                          <td>Manufacture : Shengli Oilfield Highland Petroleum
+Model : TC-450-3
+Serial No. : 191106
+Capacity : 4500 kN ~ 458,87 Ton
+Drilling Line : ∅1 1/2” (38 mm)
+Sheaves Quantity : 6</td></tr>
+                      <tr><td>Travelling Block</td>
+                          <td>1</td>
+                          <td>Manufacture : Shengli Oilfield Highland Petroleum
+Model : YC450
+Serial Number : 380125-05
+Capacity : 498 Us Ton
+Sheave Quantity : 6</td></tr>
+                      <tr><td>Drilling Line</td>
+                          <td>1</td>
+                          <td>Manufacture : Xianyang BOMCO Steel Tube & Wire Rope Co., Ltd
+Diameter : Ø1 ½” (38 mm)
+Tipe : 6x19S-IWRC, IPS
+Breaking Force : 926 kN</td></tr>
+                      <tr><td>Deadline Anchor</td>
+                          <td>1</td>
+                          <td>Manufacture : Zhejiang Zhongheng Instrument – China
+Model : JZG41
+Serial Number : 08293
+Capacity : 410 kN</td></tr>
+                      <tr><td>Weight Indicator</td>
+                          <td>1</td>
+                          <td>Manufacture : Zhejiang Zhongheng Instrument – China
+Model : JZ500A
+S/N : 1046
+Calibration Certificate : S.22.009771 
+Calibration Date : 02 Desember 2022
+Dikeluarkan : PT Multi Teraindo</td></tr>
+                      <tr><td>Pressure Gauge Accumulator</td>
+                          <td>3</td>
+                          <td>Manufacture : MC, Schuh Technology – China
+Serial Number : IF405, IH309, IK456
+Calibration Certificate : S.22.009763, S.22.009764, S.22.009768
+Calibration Date : 02 Desember 2022
+Dikeluarkan : PT. Multi Teraindo</td></tr>
+                      <tr><td>Pressure Gauge Mud Pumps</td>
+                          <td>3</td>
+                          <td>Manufacture : MC, Schuh Technology – China
+S/N : MC907, MC908, M0907611
+Calibration Certificate : S.22.009760, S.22.009759, S.22.009766
+Calibration Date : 01 Desember 2022
+Dikeluarkan : PT. Multi Teraindo</td></tr>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Rotating System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th>
+                    <th>Total Equipment</th>
+                    <th>Details</th></tr></thead>
+                  <tbody>
+                      <tr><td>Rotary Table</td>
+                        <td>1</td>
+                        <td>Manufacture : Shengli Oilfield Highland Petroleum
+Model : ZP-375
+Serial Number : 38060404
+Capacity : 5850 kN ~ 645 US Ton
+Date : 2009.09</td></tr>
+                      <tr><td>Rotary Swivel</td>
+                        <td>1</td>
+                        <td>Manufacture : Varco – USA
+Type/Model : AC Motor/TDS11SA
+Capacity : 500 Tons
+Engine Capacity : 476 HP
+Continues Torque : 45.000 Ft.lb
+Maximum Torque : 59.000 Ft.lb</td></tr>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Well Control System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th>
+                    <th>Total Equipment</th>
+                    <th>Details</th></tr></thead>
+                  <tbody>
+                        <tr><td>Single RAM BOP</td><td>1</td><td>Manufacture : Rongsheng Manufacture Ltd of Huabei Oilfield, Hebei
+Model : FZ35-70
+Serial Number : 2012-059
+Size : ∅13 5/8” x 10.000 Psi
+COC No. : 033-IPE/COC-BOP/X-22
+Date : 21 October 2022i</td></tr>
+                      <tr><td>Annular BOP</td><td>1</td><td>Manufacture : Rongsheng Manufacture Ltd of Huabei Oilfield, Hebei
+Model : FH35-35/70
+Serial Number : 2012-149
+Size : ∅13 5/8” x 5.000 Psi
+COC No. : 029-IPE/COC-BOP/X-22
+Date : 22 October 2022</td></tr>
+                      <tr><td>BOP Accumulator</td><td>1</td><td>Manufacture : Beijing Petroleum Machinery Factory
+Model : FKQ1280-7
+Serial Number : C0912186
+Capacity : 80L x 16
+Number of Bottles : 16
+Working Pressure : 3000 Psi
+Date : 2009.12
+COI No: 362.TSI-COI-M/PV/223-10.22
+dikeluarkan oleh PT Titis Sampurna Inspection tanggal 11 Oktober 2022</td></tr>
+                      <tr><td>Double RAM BOP</td><td>1</td><td>Manufacture : Rongsheng Manufacture Ltd of Huabei Oilfield, Hebei
+Model : 2FZ35-70
+Serial Number : 2012-059
+Size : ∅13 5/8” x 10.000 Psi
+COC No. : 030-IPE/COC-BOP/X-22
+Date : 21 October 2022</td></tr>
+                      <tr><td>Choke Manifold</td><td>1</td><td>Manufacture : Chengde Kingdream petroleum – China
+Model : YJG70
+Serial Number : 090402
+Working Pressure : 70 MPa (10.000 Psi)
+Test Pressure : 105 MPa (15.000 Psi)
+Date : 2009.04</td></tr>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Power System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th>
+                    <th>Total Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                      <tr><td>Prime Mover Generator Set</td><td>4</td><td>Diesel Engines:
+Manufacture : Caterpillar – USA
+Model No : C3512
+Serial No : 1GZ04524, 1GZ04552, 1GZ05070
+Capacity : 1310 kW @ 1500 RPM
+Year built : 2008
+
+AC Sync Generator:
+Manufacture : Caterpillar – USA
+Model : 3 Phase
+Serial No : 7TN02808, 7TN02856, 7TN02844, 7TN03248
+Capacity : 1900 KVA</td></tr>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Circulating System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th>
+                    <th>Total Equipment</th>
+                    <th>Details</th></tr></thead>
+                  <tbody>
+                      <tr><td>Mud Pumps c/w Super Changing Pumps</td>
+                        <td>3</td>
+                        <td>Triplex Pumps: Manufacture : Baoji Oilfield Machinery Co., Ltd.; Model : F-1600 Triplex Pumps; Serial Number : BF08-262 (MP#1), BF08-279 (MP#2), BF08-274 (MP#3); Capacity : 5000 Psi Working Pressure; Year built : 2009.08, 2010.07
+Power Engines: Manufacture : Yongji Shanxi; Type/Model : DC Drilling Motor/YZ08; Serial Number/Year : 1086263/2006, 1086230/2006 MP#1; 10880284/2008, 108A0276/2006 MP#2; 108A7093/2007, 108A80290/2008 MP#3; Cap/Volts/Amps DC : 800 kW/750 V/1150 A
+Super Charging Pumps: Manufacture : Made in China; Type/Model : 200SB270-28; Inlet x Outlet Size : 8” x 6” ; Impeller Size : 11”; Motor : 60 HP; Rated Pump Discharge : 400 gpm</td></tr>
+                      <tr><td>Poor Boy Degasser</td>
+                        <td>1</td>
+                        <td>Manufacture : Chengde Kingdream Petroleum; Product’s No. : NQF 1200/1.76
+Serial No : R-MS-01; Type : S; Standard : GB150-1988
+Volume : m3; Equipment’s No. : MS-08-112; Year Built : 2008.12</td></tr>
+                      <tr><td>Shakers</td>
+                        <td>3</td>
+                        <td>Manufacture : Derrick Corporation
+Model No. : FLC 2000 3 Panel
+P/L No. : 5339-00-035
+DWG No. : 14495-02
+S/N : 14495-2505, 14495-2474,
+Year Built : 10/29/08</td></tr>
+                      <tr><td>Mud Cleaner</td>
+                        <td>1</td>
+                        <td>Remove Sand: Manufacture : Dong Ying Yong Ji Petroleum; Hydro cyclone : 300 mm; Diameter Qty piece : 2; Working Pressure : 0,3 MPa; Capacity : 240 m3/h
+Remove Mud: Manufacture : Dong Ying Yong Ji Petroleum; Hydro cyclone : 100 mm; Diameter Qty piece : 14; Working Pressure : 0,2 – 0,4 MPa; Capacity : 260 m3/h</td></tr>
+                      <tr><td>Degasser</td>
+                        <td>1</td>
+                        <td>Manufacture : Made in China
+Model No : ZCQ300
+Capacity : Gas 2100m3/h, Mud 215 m3/h
+Vacuum : 680 mmHg
+Motor Power : 3 kW</td></tr>
+                      <tr><td>Active Mud System</td>
+                        <td>5</td>
+                        <td>Mud Tanks : 3 Compartments has 2 Agitators, 15 kW each.
+Volume :1800 bbls
+Total Reserve : Reserve Tank 350 bbls
+Design : for up 14 ppg Mud
+Separate Pill Tank : 68,6 bbls
+Year Built : 2009</td></tr>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Safety Equipment</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th>
+                    <th>Total Equipment</th>
+                    <th>Details</th></tr></thead>
+                  <tbody>
+                      <tr><td>Relieve Valve Accumulator</td>
+                        <td>1</td>
+                        <td>Manufacture : Beijing Petroleum
+Model : Y-25, 20 C
+Setting Pressure : ≤23 MPa
+Closed Pressure : ≥19 MPa
+S/N : 0910031S</td></tr>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+      </div>
+    </details>
+    
+    <details>
+      <summary><strong>GW 207</strong> (2000 HP Land Rig)</summary>
+      <div class="accordion-content">
+        <details class="nested-accordion">
+            <summary>Hoisting System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th>
+                    <th>Total Equipment</th>
+                    <th>Details</th></tr></thead>
+                  <tbody>
+                      <tr><td>Mast</td>
+                        <td>1</td>
+                        <td>Manufacturer : Baoji Oilfield Machinery Co., Ltd
+Model / Serial No. : JJ450/46-K11 / JG18-70DB81-01
+Max. Static Hook Load : 458,87 Metric Ton (4500 KN)
+Max. Rated Design Wind Velocity 
+Expected : 60 knots
+Unexpected : 75 Knots
+Height : 142 Feet / 43,28 Meter
+Manufacture Year : 2019</td></tr>
+                      <tr><td>Substructure</td>
+                        <td>1</td>
+                        <td>Manufacture : Baoji Oilfield Machinery Co., Ltd
+Model : DZ450/10.5-X56
+Serial No : JG18-70DB81-01
+Manufacture Year : 2019</td></tr>
+                      <tr><td>Crown Block</td>
+                        <td>1</td>
+                        <td>Manufacture : Baoji Oilfield Machinery Co., Ltd
+Type / Model : TC7-450-27
+Serial No. : JG18-70DB81-01
+Manufacture Year : 2019</td></tr>
+                      <tr><td>Drawworks</td>
+                        <td>1</td>
+                        <td>Manufacture : Baoji Oilfield Machinery Co., Ltd
+Model : JC-70DB
+Serial No. : CD18-011
+Manufacture Year : 2019
+Rate Power : 2000 HP
+Main Drum : Groove 1-1/2” (38 mm)</td></tr>
+                      <tr><td>Traveling Block</td>
+                        <td>1</td>
+                        <td>Manufacture : Baoji Oilfield Machinery Co., Ltd
+Type : YC450
+Serial No. : ZS19-007
+Manufacture Year : 2019
+Rated : 4500 kN
+Sheave grooved line size : 1-1/2"
+No of Sheave : 6 Sheaves</td></tr>
+                      <tr><td>Drilling Line</td>
+                        <td>1</td>
+                        <td>Manufacturer : Xianyang Bomco Steel Tube & Wire Rope Co., Ltd
+Size : 1-1/2" , 6x19S-IWRC EIP U sZ,
+Certificate No. : 1808-071
+Date : 03-08-2018</td></tr>
+                      <tr><td>Weight Indicator</td>
+                        <td>1</td>
+                        <td>Manufacture : Hubei Jianghan Petroleum Instrument Co.Ltd
+Model : JZZ2
+Serial No. : D18-280
+No. Certificate : ZHNJ202303140072
+Date Certificate : 14 Maret 2023
+Calibrate by : Shenzen Zhongheng detectionTechnolgy Co.ltd</td></tr>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Rotating System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th>
+                    <th>Total Equipment</th>
+                    <th>Details</th></tr></thead>
+                  <tbody>
+                      <tr><td>Rotary Table</td>
+                        <td>1</td>
+                        <td>Manufacture : Baoji Oilfield Machinery Co., Ltd
+Type : ZP375
+Serial No. : ZS19-004
+Manufacture Year : 2019</td></tr>
+                      <tr><td>Top Drive</td>
+                        <td>1</td>
+                        <td>Manufacture : Beijing Petroleum Machinery Co.Ltd
+Model : DQ70BSD – 1000 HP
+Serial No. : 19650
+Rated : 500 T
+Manufacture Year : 2019</td></tr>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Well Control System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th>
+                    <th>Total Equipment</th>
+                    <th>Details</th></tr></thead>
+                  <tbody>
+                      <tr><td>Single RAM BOP</td>
+                        <td>1</td>
+                        <td>BOP Double Ram : 13-5/8” x 10000 psi
+Manufacture : Rongsheng Machinery Manufacture Co.Ltd
+COC No. : JK2021-12-28-002-C
+Date : 28 Desember 2021</td></tr>
+                      <tr><td>BOP Accumulator Unit</td>
+                        <td>1</td>
+                        <td>Manufacture : Beijing Petroleum Machinery Factory
+Serial No. : C1208426
+Model : FKQ800-7B
+Pressure max : 3.000 Psi
+Start Pressur : 1.000 Psi
+No. of bottles installed : 16 bottles
+Manufacture Year : 2012
+COI No. : 107.TSI-COI-M/PV/101-0.5.23
+Date COI : 30 Mei 2023
+Diperiksa & diterbitkan oleh : PT Titis Sampurna Inspection</td></tr>
+                      <tr><td>Annular BOP</td>
+                        <td>1</td>
+                        <td>BOP Annular : 13-5/8” x 5000 Psi 5K studded top and 10K flange bottom
+Manufacture : Rongsheng Machinery Manufacture Co.Ltd
+Model : FH 35 - 35 / 70
+COC No. : JK2022-07-07-003-C
+Date : 7 Juli 2022</td></tr>
+                      <tr><td>Double RAM BOP</td>
+                        <td>1</td>
+                        <td>BOP Single Ram : 13-5/8” x 10000 Psi
+Manufacture : Rongsheng Machinery Manufacture Co.Ltd
+COC No. : JK2023-01-12-001-C
+Date : 14 Maret 2023</td></tr>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Power System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th>
+                    <th>Total Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                      <tr><td>Engine Prime Mover</td>
+                        <td>4</td>
+                        <td>Engine : Caterpillar
+Model : Cat 3512
+Serial No. : LE700199 / 1GZ08523 / 11GZ08522/-
+Rated : 1090kw at 1500.rpm</td></tr>
+                      <tr><td>Generator Set</td>
+                        <td>4</td>
+                        <td>Manufacture : Caterpillar
+Model : Cat 3512
+Serial No. : 7TN05313/7TN050049/LDF000198/-
+Volts Ampere : 600 V, 1374 A Phase : 3
+Rotation speed : 1500 RPM</td></tr>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Circulating System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th>
+                    <th>Total Equipment</th>
+                    <th>Details</th></tr></thead>
+                  <tbody>
+                      <tr><td>Mud Pump</td>
+                        <td>3</td>
+                        <td>Manufacturer : Baoji Oilfield Machinery Co., Ltd.
+Model : Triplex Pump F-1600
+Serial No. : BY19-030 / BY19-028 / BY19-029
+Rating : BY19-030 / BY19-028 / BY19-029</td></tr>
+                      <tr><td>Mud Tank</td>
+                        <td>6</td>
+                        <td>Manufacture : Baoji Oilfield Machinery Co., Ltd
+capacity : 572,64 bbl</td></tr>
+                      <tr><td>Shale Shaker</td>
+                        <td>3</td>
+                        <td>Manufacture : Derrick
+Model / Type : Panel drop deck shaker FLC-503
+Caps : 120 m³/h
+Max Flow rate : 1500 GPM</td></tr>
+                      <tr><td>Desilter</td>
+                        <td>1</td>
+                        <td>Manufacture : Chengdu West Petroleum Equipment Co., Ltd.
+Model / Type : LWG450X1000-NY
+Capacity : 240 m³/hP</td></tr>
+                      <tr><td>Dessander</td>
+                        <td>1</td>
+                        <td>Manufacture : Chengdu West Petroleum Equipment Co., Ltd
+Model / Type : ZSCQ/240
+Capacity : 240 m³/h</td></tr>
+                      <tr><td>Mud Cleaner</td>
+                        <td>1</td>
+                        <td>Manufacture : Puyang Zhongyan Restars Petroleum
+Model : XBSY/QJ/300*2-100*12-A
+Serial Number : BDYIVD22020
+Capacity. : 200 – 240 m3/h</td></tr>
+                      <tr><td>Mud Gas Separator</td>
+                        <td>1</td>
+                        <td>Manufacture : He Bei Hua Bei Rongsheng Petroleum Equipment
+Model : ZJYCLQ-8000/1.6-III
+Working Pressure : 1,5 Mpa
+Product Number : 221101
+Manufacture Year : 26.11.2022</td></tr>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Safety Equipment</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th>
+                    <th>Total Equipment</th>
+                    <th>Details</th></tr></thead>
+                  <tbody>
+                      <tr><td>Portable Fire Extinguisher</td>
+                        <td>107</td>
+                        <td>Dry Chemical Powder 100 lbs : 6 Unit
+Dry Chemical Powder 5 kg : 25 Unit
+Carbon Dioxide 3 kg : 74 Unit</td></tr>
+                      <tr><td>Safety Shower & Eye Washer</td>
+                        <td>5</td>
+                        <td>Manufacture : MSA
+Model : 7461</td></tr>
+                      <tr><td>Multi Gas Detector</td>
+                        <td>9</td>
+                        <td>Manufacture : MSA 7ea / ALTAIR 4X, 2ea
+Type : Multi Gas Detector</td></tr>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+      </div>
+    </details>
+    
+    <details>
+      <summary><strong>GW 265</strong> (2000 HP Land Rig)</summary>
+      <div class="accordion-content">
+        <details class="nested-accordion">
+            <summary>Hoisting System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Rotating System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Well Control System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Power System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Circulating System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Safety Equipment</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+      </div>
+    </details>
+
+    <details>
+      <summary><strong>GW 336</strong> (1500 HP Land Rig)</summary>
+      <div class="accordion-content">
+        <details class="nested-accordion">
+            <summary>Hoisting System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Rotating System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Well Control System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Power System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Circulating System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Safety Equipment</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+      </div>
+    </details>
+
+    <details>
+      <summary><strong>GW 337</strong> (1500 HP Land Rig)</summary>
+      <div class="accordion-content">
+        <details class="nested-accordion">
+            <summary>Hoisting System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Rotating System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Well Control System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Power System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Circulating System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Safety Equipment</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+      </div>
+    </details>
+
+    <details>
+      <summary><strong>GW 338</strong> (1500 HP Land Rig)</summary>
+      <div class="accordion-content">
+        <details class="nested-accordion">
+            <summary>Hoisting System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Rotating System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Well Control System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Power System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Circulating System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Safety Equipment</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+      </div>
+    </details>
+
+    <details>
+      <summary><strong>GW 339</strong> (1500 HP Land Rig)</summary>
+      <div class="accordion-content">
+        <details class="nested-accordion">
+            <summary>Hoisting System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Rotating System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Well Control System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Power System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Circulating System</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+        <details class="nested-accordion">
+            <summary>Safety Equipment</summary>
+            <div class="nested-content">
+              <table class="spec-table">
+                  <thead><tr><th>Equipment</th><th>Details</th></tr></thead>
+                  <tbody>
+                      <tr><td>Gas Detector</td><td>Manufacture : MSA / ALTAIR 4X
+Type : Multi Gas Detector (9 Units)</td></tr>
+                  </tbody>
+              </table>
+            </div>
+        </details>
+      </div>
+    </details>
+
+</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   
-  // Fitur 1: Live Search untuk Tabel
+  // Fitur Filter Ganda
   const searchInput = document.getElementById('rigSearchInput');
   const table = document.getElementById('rigTable');
   const tableRows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+  const detailsSection = document.getElementById('rigDetailsSection');
+  const rigDetails = detailsSection.getElementsByTagName('details');
 
   searchInput.addEventListener('keyup', function() {
     const filter = searchInput.value.toLowerCase();
+    
+    // Filter Tabel Utama
     for (let row of tableRows) {
       let match = row.textContent.toLowerCase().includes(filter);
       row.style.display = match ? "" : "none";
     }
+    
+    // Filter Bagian Spesifikasi Detail
+    for (let detail of rigDetails) {
+      let match = detail.textContent.toLowerCase().includes(filter);
+      detail.style.display = match ? "" : "none";
+    }
   });
 
-  // Fitur 2: Efek Transisi Fade-in saat Scroll
+  // Fitur Efek Transisi Fade-in saat Scroll
   const sections = document.querySelectorAll('.fade-in-section');
   const observerOptions = {
     root: null,

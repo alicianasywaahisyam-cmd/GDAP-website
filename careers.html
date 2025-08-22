@@ -33,23 +33,20 @@
     /* ==========================================================================
        2. NAVBAR (Gaya Korporat Baru)
        ========================================================================== */
-    .navbar {
+.navbar {
       display: flex; align-items: center; justify-content: space-between;
       background-color: #fff; border-bottom: 1px solid #ddd;
       padding: 10px 40px; position: sticky; top: 0; z-index: 1000;
+      flex-shrink: 0;
     }
     .navbar-left { display: flex; align-items: center; gap: 15px; }
     .logo-img { height: 60px; }
+    /* REVISI: Mengembalikan gaya nama perusahaan menjadi satu baris */
     .company-name { 
-        font-size: 17px;
+        font-size: 20px; 
         font-weight: 700; 
         color: #112a45;
-        line-height: 1.2;
-    }
-    .company-name .sub-line {
-        font-size: 0.9em;
-        font-weight: 600;
-        color: #555;
+        white-space: nowrap; /* Mencegah teks turun baris */
     }
     .navbar-right { display: flex; align-items: center; gap: 10px; }
     .navbar-right a, .dropbtn {
@@ -57,12 +54,10 @@
       padding: 8px 12px; border-radius: 6px; transition: background-color 0.3s, color 0.3s;
     }
     .navbar-right a:hover, .dropbtn:hover {
-      background-color: #fef0e8;
-      color: #F37021;
+      background-color: #fef0e8; color: #F37021;
     }
     .navbar-right a.active {
-        background-color: #F37021;
-        color: #fff;
+        background-color: #F37021; color: #fff;
     }
     .divider { color: #ddd; }
     .dropdown { position: relative; }

@@ -30,14 +30,14 @@
       flex-direction: column;
     }
     
-    h1, h2, h3, h4, h5, h6, .company-name, .cta-button, .stat-number {
+    h1, h2, h3, h4, h5, h6, .company-name {
         font-family: 'Montserrat', sans-serif;
     }
 
     /* ==========================================================================
        2. NAVBAR (Gaya Korporat Baru)
        ========================================================================== */
-    .navbar {
+.navbar {
       display: flex; align-items: center; justify-content: space-between;
       background-color: #fff; border-bottom: 1px solid #ddd;
       padding: 10px 40px; position: sticky; top: 0; z-index: 1000;
@@ -45,16 +45,12 @@
     }
     .navbar-left { display: flex; align-items: center; gap: 15px; }
     .logo-img { height: 60px; }
+    /* REVISI: Mengembalikan gaya nama perusahaan menjadi satu baris */
     .company-name { 
-        font-size: 17px;
+        font-size: 20px; 
         font-weight: 700; 
         color: #112a45;
-        line-height: 1.2;
-    }
-    .company-name .sub-line {
-        font-size: 0.9em;
-        font-weight: 600;
-        color: #555;
+        white-space: nowrap; /* Mencegah teks turun baris */
     }
     .navbar-right { display: flex; align-items: center; gap: 10px; }
     .navbar-right a, .dropbtn {
@@ -62,12 +58,10 @@
       padding: 8px 12px; border-radius: 6px; transition: background-color 0.3s, color 0.3s;
     }
     .navbar-right a:hover, .dropbtn:hover {
-      background-color: #fef0e8;
-      color: #F37021;
+      background-color: #fef0e8; color: #F37021;
     }
     .navbar-right a.active {
-        background-color: #F37021;
-        color: #fff;
+        background-color: #F37021; color: #fff;
     }
     .divider { color: #ddd; }
     .dropdown { position: relative; }
@@ -119,67 +113,44 @@
     }
 
     .content-wrapper {
-      max-width: 1100px;
+      max-width: 960px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 30px;
+      gap: 40px;
     }
     
     /* ==========================================================================
        4. UPGRADED CONTENT STYLES & ANIMATIONS
        ========================================================================== */
     .page-title {
-        color: #112a45; font-size: 32px; margin-bottom: 20px;
+        color: #112a45; font-size: 32px; margin-bottom: 0;
         padding-bottom: 10px; border-bottom: 2px solid #ddd;
     }
     
-    .location-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-        gap: 30px;
-    }
-
-    .content-card {
+    .location-card {
       background-color: #fff; padding: 0; border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       overflow: hidden;
     }
-    .content-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+    .location-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
     
     .location-details {
         padding: 25px 30px;
     }
 
     .location-details h2 {
-      font-size: 22px; color: #112a45; margin-bottom: 20px;
-      border-bottom: 2px solid #e0e0e0; padding-bottom: 8px;
+      font-size: 22px; color: #112a45; margin-bottom: 15px;
     }
+    /* REVISI: Menghapus padding-left yang tidak perlu */
     .location-details p { 
-        margin-bottom: 15px;
         line-height: 1.7;
-        display: flex;
-        align-items: flex-start;
-        padding-left: 35px;
-        position: relative;
     }
-
-    .location-details p::before {
-        content: '';
-        position: absolute; left: 0; top: 5px;
-        width: 20px; height: 20px;
-        background-color: #112a45;
-        -webkit-mask-size: cover;
-        mask-size: cover;
-    }
-    .address::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M12 2C8.134 2 5 5.134 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.134 15.866 2 12 2ZM12 4C14.761 4 17 6.239 17 9C17 11.899 13.864 16.713 12 18.892C10.136 16.713 7 11.899 7 9C7 6.239 9.239 4 12 4ZM12 7C10.895 7 10 7.895 10 9C10 10.105 10.895 11 12 11C13.105 11 14 10.105 14 9C14 7.895 13.105 7 12 7Z'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M12 2C8.134 2 5 5.134 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.134 15.866 2 12 2ZM12 4C14.761 4 17 6.239 17 9C17 11.899 13.864 16.713 12 18.892C10.136 16.713 7 11.899 7 9C7 6.239 9.239 4 12 4ZM12 7C10.895 7 10 7.895 10 9C10 10.105 10.895 11 12 11C13.105 11 14 10.105 14 9C14 7.895 13.105 7 12 7Z'/%3E%3C/svg%3E"); }
-    .phone::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M16.579 14.717C15.834 14.538 15.084 14.454 14.336 14.454C14.073 14.454 13.812 14.484 13.553 14.542L12.78 16.098C11.311 15.341 10.023 14.052 9.266 12.584L10.823 11.81C10.881 11.551 10.91 11.29 10.91 11.027C10.91 10.279 10.826 9.529 10.647 8.784L10.373 7.683C10.126 6.697 9.282 6 8.271 6H7.017C5.833 6 4.888 6.997 5.011 8.163C5.239 10.386 6.136 12.488 7.575 14.247C9.332 16.342 11.666 17.895 14.195 18.324C15.362 18.503 16.358 17.558 16.358 16.374V15.089C16.358 15.013 16.358 14.937 16.358 14.86C16.358 14.331 15.875 13.916 15.358 14.03L15.353 14.042C15.348 14.042 15.348 14.042 15.348 14.042L16.45 14.316C16.579 14.717 16.579 14.717 16.579 14.717Z'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M16.579 14.717C15.834 14.538 15.084 14.454 14.336 14.454C14.073 14.454 13.812 14.484 13.553 14.542L12.78 16.098C11.311 15.341 10.023 14.052 9.266 12.584L10.823 11.81C10.881 11.551 10.91 11.29 10.91 11.027C10.91 10.279 10.826 9.529 10.647 8.784L10.373 7.683C10.126 6.697 9.282 6 8.271 6H7.017C5.833 6 4.888 6.997 5.011 8.163C5.239 10.386 6.136 12.488 7.575 14.247C9.332 16.342 11.666 17.895 14.195 18.324C15.362 18.503 16.358 17.558 16.358 16.374V15.089C16.358 15.013 16.358 14.937 16.358 14.86C16.358 14.331 15.875 13.916 15.358 14.03L15.353 14.042C15.348 14.042 15.348 14.042 15.348 14.042L16.45 14.316C16.579 14.717 16.579 14.717 16.579 14.717Z'/%3E%3C/svg%3E"); }
-    .email::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M20 4H4C2.895 4 2 4.895 2 6V18C2 19.105 2.895 20 4 20H20C21.105 20 22 19.105 22 18V6C22 4.895 21.105 4 20 4ZM20 6L12 11L4 6H20ZM20 18H4V8L12 13L20 8V18Z'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M20 4H4C2.895 4 2 4.895 2 6V18C2 19.105 2.895 20 4 20H20C21.105 20 22 19.105 22 18V6C22 4.895 21.105 4 20 4ZM20 6L12 11L4 6H20ZM20 18H4V8L12 13L20 8V18Z'/%3E%3C/svg%3E"); }
 
     .map-embed {
         width: 100%;
-        height: 300px;
+        height: 350px;
         border: none;
     }
 
@@ -198,7 +169,6 @@
       .page-wrapper { flex-direction: column; }
       .sidebar { border-right: none; border-bottom: 1px solid #ddd; flex-shrink: 0;}
       .main-content { padding: 25px 15px; }
-      .location-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -260,29 +230,22 @@
       <div class="content-wrapper">
         <h1 class="page-title fade-in-section">Our Locations</h1>
         
-        <div class="location-grid">
-            
-            <div class="content-card fade-in-section">
-                <iframe class="map-embed" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.666421946397!2d106.82458407500216!3d-6.17539299380962!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f5d2e764b12d%3A0x46f753c5e8a5b20e!2sMonumen%20Nasional!5e0!3m2!1sid!2sid!4v1724241604082!5m2!1sid!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                <div class="location-details">
-                    <h2>Head Office</h2>
-                    <p class="address"><strong>Address:</strong> JB Tower, 19th floor Zone A, C & F, Jl. Kebon Sirih No. 48-50, Jakarta 10110</p>
-                    <p class="phone"><strong>Phone:</strong> +62 21 1234 5678</p>
-                    <p class="email"><strong>Email:</strong> info@gdap.com</p>
-                </div>
+        <div class="location-card fade-in-section">
+            <iframe class="map-embed" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.666421868345!2d106.82496237500001!3d-6.17539239381257!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f5d2e764b12d%3A0x3d2542f0d0c21625!2sJB%20Tower!5e0!3m2!1sen!2sid!4v1724383575037!5m2!1sen!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div class="location-details">
+                <h2>Head Office</h2>
+                <p><strong>Address:</strong><br>JB Tower, 19th floor Zone A, C & F, Jl. Kebon Sirih No. 48-50, Jakarta 10110</p>
             </div>
-
-            <div class="content-card fade-in-section">
-                <iframe class="map-embed" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.368779951664!2d106.93122147500244!3d-6.185686093776269!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e698b5251347053%3A0xe6c31888062534a!2sPT.%20Alakasa%20Extrusindo!5e0!3m2!1sid!2sid!4v1724241656247!5m2!1sid!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                <div class="location-details">
-                    <h2>Laboratorium</h2>
-                    <p class="address"><strong>Address:</strong> Jalan Pulogadung 4, Rawa Terate, Cakung, Jakarta Timur 1920 (di dalam kawasan PT Alakasa Extrusindo lt. 1)</p>
-                    <p class="phone"><strong>Phone:</strong> +62 21 5678 9012</p>
-                    <p class="email"><strong>Email:</strong> lab@gdap.com</p>
-                </div>
-            </div>
-            
         </div>
+
+        <div class="location-card fade-in-section">
+            <iframe class="map-embed" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.3683401138474!2d106.935149375!3d-6.215582993771507!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e698b4812948335%3A0x95039a4855a027fb!2sPT.%20Alakasa%20Extrusindo!5e0!3m2!1sen!2sid!4v1724383637174!5m2!1sen!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div class="location-details">
+                <h2>Laboratorium</h2>
+                <p><strong>Address:</strong><br>Jalan Pulogadung 4, Rawa Terate, Cakung, Jakarta Timur 1920 (di dalam kawasan PT Alakasa Extrusindo lt. 1)</p>
+            </div>
+        </div>
+        
       </div>
     </main>
   </div>

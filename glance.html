@@ -46,10 +46,10 @@
     .navbar-left { display: flex; align-items: center; gap: 15px; }
     .logo-img { height: 60px; }
     .company-name { 
-        font-size: 17px; font-weight: 700; color: #112a45; line-height: 1.2;
-    }
-    .company-name .sub-line {
-        font-size: 0.9em; font-weight: 600; color: #555;
+        font-size: 20px; 
+        font-weight: 700; 
+        color: #112a45;
+        white-space: nowrap;
     }
     .navbar-right { display: flex; align-items: center; gap: 10px; }
     .navbar-right a, .dropbtn {
@@ -110,15 +110,79 @@
        4. UPGRADED CONTENT STYLES & ANIMATIONS
        ========================================================================== */
     .hero-glance {
-      position: relative; padding: 60px 40px; border-radius: 8px; color: white;
-      background: linear-gradient(rgba(17, 42, 69, 0.7), rgba(17, 42, 69, 0.7)), url('GDAP3.jpeg');
-      background-size: cover; background-position: center; overflow: hidden;
+      position: relative; 
+      border-radius: 8px; 
+      color: white;
+      overflow: hidden;
+      /* Min height untuk memastikan section terlihat */
+      min-height: 280px;
+      display: flex;
+      align-items: center;
+    }
+    .hero-content {
+      position: relative; /* Agar konten teks berada di atas overlay gelap */
+      z-index: 2;
+      padding: 60px 40px;
     }
     .hero-glance h2 {
       font-size: 32px; margin-bottom: 15px;
       border-bottom: 2px solid rgba(255,255,255,0.5); padding-bottom: 10px;
     }
     .hero-glance p { font-size: 16px; max-width: 90%; line-height: 1.7; }
+    
+    /* === GAYA SLIDER & PARALLAX BARU === */
+    .slideshow-container {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 0;
+      /* Transisi untuk efek parallax yang halus */
+      transition: transform 0.2s ease-out;
+    }
+    .mySlides {
+      display: none;
+      width: 100%; height: 100%;
+      background-size: cover;
+      background-position: center;
+    }
+    .mySlides::after {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background-color: rgba(17, 42, 69, 0.7);
+        z-index: 1;
+    }
+    .prev, .next {
+      cursor: pointer; position: absolute; top: 50%;
+      width: auto; padding: 16px; margin-top: -22px;
+      color: white; font-weight: bold; font-size: 18px;
+      transition: 0.6s ease; border-radius: 0 3px 3px 0;
+      user-select: none; z-index: 3;
+    }
+    .next { right: 0; border-radius: 3px 0 0 3px; }
+    .prev:hover, .next:hover { background-color: rgba(0,0,0,0.8); }
+    .dots-container {
+      text-align: center;
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+    }
+    .dot {
+      cursor: pointer; height: 12px; width: 12px;
+      margin: 0 4px; background-color: rgba(255,255,255,0.5);
+      border-radius: 50%; display: inline-block;
+      transition: background-color 0.6s ease;
+    }
+    .active-dot, .dot:hover { background-color: #F37021; }
+    .fade {
+      animation-name: fade;
+      animation-duration: 1.5s;
+    }
+    @keyframes fade {
+      from {opacity: .4} 
+      to {opacity: 1}
+    }
 
     .stats-section {
         display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -158,7 +222,6 @@
     .info-list .icon-vision::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M12 5C5.373 5 2 12 2 12C2 12 5.373 19 12 19C18.627 19 22 12 22 12C22 12 18.627 5 12 5ZM12 7C14.761 7 17 9.239 17 12C17 14.761 14.761 17 12 17C9.239 17 7 14.761 7 12C7 9.239 9.239 7 12 7ZM12 9C10.343 9 9 10.343 9 12C9 13.657 10.343 15 12 15C13.657 15 15 13.657 15 12C15 10.343 13.657 9 12 9Z'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M12 5C5.373 5 2 12 2 12C2 12 5.373 19 12 19C18.627 19 22 12 22 12C22 12 18.627 5 12 5ZM12 7C14.761 7 17 9.239 17 12C17 14.761 14.761 17 12 17C9.239 17 7 14.761 7 12C7 9.239 9.239 7 12 7ZM12 9C10.343 9 9 10.343 9 12C9 13.657 10.343 15 12 15C13.657 15 15 13.657 15 12C15 10.343 13.657 9 12 9Z'/%3E%3C/svg%3E"); }
     .info-list strong { display: block; color: #112a45; font-weight: 700;}
     
-    /* REVISI: CTA Card yang lebih keren */
     .cta-banner {
         background-color: #112a45;
         color: #fff;
@@ -178,17 +241,23 @@
         padding: 0;
     }
     .cta-banner p {
-        color: #ffffff;
+        color: #a9b4c2;
         max-width: 600px;
         margin: 0;
     }
     .cta-banner .cta-button {
-        background-color: #ffffffe6;
+        background-color: #F37021; /* Warna oranye agar lebih menonjol */
         font-family: 'Montserrat', sans-serif;
+        padding: 12px 25px; /* Sedikit lebih besar */
         margin-top: 10px;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 6px;
+        transition: background-color 0.3s, transform 0.3s;
     }
     .cta-banner .cta-button:hover {
-        background-color: #d85d11;
+        background-color: #d85e15; /* Warna oranye lebih gelap saat hover */
+        transform: translateY(-3px);
     }
 
     .fade-in-section {
@@ -208,7 +277,7 @@
       .main-content { padding: 25px 15px; }
       .values-grid { grid-template-columns: 1fr; }
       .stats-section { grid-template-columns: 1fr 1fr; }
-      .hero-glance { padding: 40px 25px; }
+      .hero-content { padding: 40px 25px; }
       .hero-glance p { max-width: 100%; }
     }
   </style>
@@ -267,12 +336,31 @@
       <a href="contact.html">Contact</a>
     </aside>
 
-    <main class="main-content">
+    <main class="main-content" id="main-content">
       <div class="content-wrapper">
         
         <section class="hero-glance fade-in-section">
-          <h2>Company Overview</h2>
-          <p>As the primary regional subsidiary of Great Wall Drilling Company (GWDC), GDAP delivers high-quality, innovative, and integrated solutions for the global energy industry. Our services cover every stage of the reservoir life cycle, emphasizing health, safety, and environment (HSE) standards and upholding professionalism, integrity, and global collaboration.</p>
+          
+          <div class="slideshow-container">
+            
+            <div class="mySlides fade" style="background-image: url('GDAP3.jpeg');"></div>
+            <div class="mySlides fade" style="background-image: url('GW1.jpg');"></div>
+            <div class="mySlides fade" style="background-image: url('GW2.jpg');"></div>
+          </div>
+
+          <div class="hero-content">
+            <h2>Company Overview</h2>
+            <p>As the primary regional subsidiary of Great Wall Drilling Company (GWDC), GDAP delivers high-quality, innovative, and integrated solutions for the global energy industry. Our services cover every stage of the reservoir life cycle, emphasizing health, safety, and environment (HSE) standards and upholding professionalism, integrity, and global collaboration.</p>
+          </div>
+
+          <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+          <a class="next" onclick="plusSlides(1)">&#10095;</a>
+          <div class="dots-container">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+          </div>
+
         </section>
         
         <section class="stats-section fade-in-section">
@@ -329,7 +417,7 @@
         <section class="cta-banner fade-in-section">
             <h3>Our Parent Company</h3>
             <p>GDAP is proud to be part of the global Great Wall Drilling Company (GWDC) family, a world leader in integrated energy services.</p>
-            <a href="http://www.gwdc.com.cn/" class="cta-button" target="_blank">Visit GWDC Global Website</a>
+            <a href="https://www.gwdc.com.cn/en/" class="cta-button" target="_blank">Visit GWDC Global Website</a>
         </section>
 
       </div>
@@ -338,9 +426,12 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  const sections = document.querySelectorAll('.fade-in-section');
   
-  const observer = new IntersectionObserver((entries, observer) => {
+  // =======================================================
+  // 1. ANIMASI FADE-IN UNTUK SEMUA SECTION
+  // =======================================================
+  const sections = document.querySelectorAll('.fade-in-section');
+  const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('is-visible');
@@ -348,40 +439,95 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }, { threshold: 0.1 });
+  sections.forEach(section => { observer.observe(section); });
 
-  sections.forEach(section => {
-    observer.observe(section);
-  });
 
+  // =======================================================
+  // 2. EFEK PARALLAX PADA HERO SLIDER
+  // =======================================================
+  const mainContent = document.getElementById('main-content');
+  const sliderContainer = document.querySelector('.slideshow-container');
+  if (sliderContainer) {
+    mainContent.addEventListener('scroll', function() {
+        const scrollTop = mainContent.scrollTop;
+        // Gerakkan background lebih lambat (0.4x dari kecepatan scroll)
+        sliderContainer.style.transform = `translateY(${scrollTop * 0.4}px)`;
+    });
+  }
+
+
+  // =======================================================
+  // 3. ANIMASI HITUNG ANGKA (LEBIH HALUS)
+  // =======================================================
+  const animateCounter = (el) => {
+    const target = +el.getAttribute('data-target');
+    const duration = 2000; // Durasi animasi dalam milidetik
+    let start = null;
+
+    const step = (timestamp) => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      el.innerText = Math.floor(progress * target);
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      }
+    };
+    window.requestAnimationFrame(step);
+  };
+  
   const counterObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        const el = entry.target;
-        const target = +el.getAttribute('data-target');
-        let currentNumber = 0;
-        
-        const updateCount = () => {
-            const increment = Math.ceil(target / 100); // Count up in 100 steps
-            currentNumber += increment;
-
-            if (currentNumber < target) {
-                el.innerText = currentNumber;
-                requestAnimationFrame(updateCount);
-            } else {
-                el.innerText = target;
-            }
-        };
-        requestAnimationFrame(updateCount);
-        
-        observer.unobserve(el);
+        animateCounter(entry.target);
+        observer.unobserve(entry.target);
       }
     });
   }, { threshold: 0.8 });
-  
-  const statNumbers = document.querySelectorAll('.stat-number');
-  statNumbers.forEach(number => {
-      counterObserver.observe(number);
+
+  document.querySelectorAll('.stat-number').forEach(number => {
+    counterObserver.observe(number);
   });
+
+
+  // =======================================================
+  // 4. LOGIKA SLIDER
+  // =======================================================
+  let slideIndex = 1;
+  const slides = document.getElementsByClassName("mySlides");
+  const dots = document.getElementsByClassName("dot");
+
+  // Buat fungsi global agar bisa diakses oleh onclick di HTML
+  window.plusSlides = function(n) {
+    showSlides(slideIndex += n);
+  }
+  window.currentSlide = function(n) {
+    showSlides(slideIndex = n);
+  }
+
+  function showSlides(n) {
+    if (n > slides.length) { slideIndex = 1 }
+    if (n < 1) { slideIndex = slides.length }
+    
+    for (let i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+    }
+    for (let i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active-dot", "");
+    }
+    
+    slides[slideIndex - 1].style.display = "block";
+    dots[slideIndex - 1].className += " active-dot";
+  }
+  
+  // Tampilkan slide pertama saat halaman dimuat
+  if (slides.length > 0) {
+      showSlides(slideIndex);
+  }
+
+  // Otomatis ganti slide
+  setInterval(() => {
+    plusSlides(1);
+  }, 5000);
 
 });
 </script>
