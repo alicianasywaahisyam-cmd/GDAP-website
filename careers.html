@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Careers - GDAP</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       1. GLOBAL STYLES & RESET
+       ========================================================================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-image: linear-gradient(135deg, #eaf2f8 0%, #f8f9fa 100%);
+      color: #333;
+      line-height: 1.6;
+    }
+    
+    h1, h2, h3, h4, h5, h6, .company-name {
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    /* ==========================================================================
+       2. NAVBAR (Gaya Korporat Baru)
+       ========================================================================== */
+    .navbar {
+      display: flex; align-items: center; justify-content: space-between;
+      background-color: #fff; border-bottom: 1px solid #ddd;
+      padding: 10px 40px; position: sticky; top: 0; z-index: 1000;
+    }
+    .navbar-left { display: flex; align-items: center; gap: 15px; }
+    .logo-img { height: 60px; }
+    .company-name { 
+        font-size: 17px;
+        font-weight: 700; 
+        color: #112a45;
+        line-height: 1.2;
+    }
+    .company-name .sub-line {
+        font-size: 0.9em;
+        font-weight: 600;
+        color: #555;
+    }
+    .navbar-right { display: flex; align-items: center; gap: 10px; }
+    .navbar-right a, .dropbtn {
+      text-decoration: none; color: #112a45; font-size: 14px; font-weight: 600;
+      padding: 8px 12px; border-radius: 6px; transition: background-color 0.3s, color 0.3s;
+    }
+    .navbar-right a:hover, .dropbtn:hover {
+      background-color: #fef0e8;
+      color: #F37021;
+    }
+    .navbar-right a.active {
+        background-color: #F37021;
+        color: #fff;
+    }
+    .divider { color: #ddd; }
+    .dropdown { position: relative; }
+    .dropdown-content {
+      display: none; position: absolute; top: 110%; left: 0;
+      background-color: rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px);
+      min-width: 200px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      border-radius: 10px; padding: 8px; opacity: 0;
+      transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .dropdown:hover .dropdown-content { display: block; opacity: 1; transform: translateY(0); }
+    .dropdown-content a { display: block; padding: 10px 15px; color: #112a45; font-weight: 400; font-size: 14px; border-radius: 6px; }
+    .dropdown-content a:hover { background-color: #F37021; color: #fff; }
+
+    /* ==========================================================================
+       3. GENERAL LAYOUT (Tanpa Sidebar)
+       ========================================================================== */
+    .page-container {
+      max-width: 960px; /* Lebar disesuaikan agar lebih fokus */
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    
+    .page-title {
+        color: #112a45; font-size: 32px; margin-bottom: 10px;
+        padding-bottom: 10px; border-bottom: 2px solid #ddd;
+    }
+
+    /* ==========================================================================
+       4. CONTENT COMPONENTS (HALAMAN CAREERS)
+       ========================================================================== */
+    .content-card {
+      background-color: #fff;
+      padding: 25px 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    .content-card h2 {
+      font-size: 24px; color: #112a45; margin-bottom: 20px;
+      padding-bottom: 10px; border-bottom: 2px solid #f0f0f0;
+    }
+    .content-card h3 {
+        font-size: 20px; color: #112a45; margin-bottom: 20px;
+    }
+    .content-card p {
+      margin-bottom: 15px;
+      text-align: justify;
+    }
+    
+    .job-accordion details {
+        border-bottom: 1px solid #eee;
+        margin-bottom: 10px;
+    }
+    .job-accordion details:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+    }
+    .job-accordion summary {
+        cursor: pointer;
+        padding: 15px 5px;
+        font-size: 18px;
+        font-weight: 600;
+        color: #112a45;
+        list-style: none;
+        transition: color 0.2s;
+    }
+    .job-accordion summary:hover {
+        color: #F37021;
+    }
+    .job-accordion summary::-webkit-details-marker { display: none; }
+    
+    .job-accordion .qualifications {
+        padding: 0 10px 20px 10px;
+    }
+    .job-accordion .qualifications h4 {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .job-accordion ul {
+        list-style-type: disc;
+        padding-left: 20px;
+        font-size: 14px;
+    }
+    .job-accordion ul li {
+        margin-bottom: 8px;
+    }
+    .job-accordion .position-list {
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 6px;
+        margin-bottom: 15px;
+    }
+
+    .how-to-apply {
+        background-color: #112a45;
+        color: #fff;
+        text-align: center;
+    }
+    .how-to-apply h2 {
+        color: #fff;
+        border-bottom-color: rgba(255,255,255,0.2);
+    }
+    .how-to-apply a {
+        color: #F37021;
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .how-to-apply a:hover {
+        text-decoration: underline;
+    }
+
+    .fade-in-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .fade-in-section.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* ==========================================================================
+       5. RESPONSIVE DESIGN
+       ========================================================================== */
+    @media (max-width: 900px) {
+      .navbar { flex-direction: column; padding: 15px 20px; gap: 15px; }
+      .navbar-right { flex-wrap: wrap; justify-content: center; }
+      .page-container { margin-top: 20px; padding: 0 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="navbar-left">
+      <a href="index.html"><img src="GDAP2.jpeg" alt="GDAP Logo" class="logo-img"></a>
+      <div class="company-name">
+        <span>Greatwall Drilling</span>
+        <span class="sub-line">Asia Pacific</span>
+      </div>
+    </div>
+    <nav class="navbar-right">
+      <div class="dropdown">
+        <a href="#" class="dropbtn">About Us ▼</a>
+        <div class="dropdown-content">
+          <a href="glance.html">GDAP at a glance</a>
+          <a href="location.html">Location</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+      <span class="divider">|</span>
+      <div class="dropdown">
+        <a href="#" class="dropbtn">Our Services ▼</a>
+        <div class="dropdown-content">
+          <a href="drillingrig.html">Drilling Rig</a>
+          <a href="mud.html">Mud</a>
+          <a href="cementing.html">Cementing</a>
+        </div>
+      </div>
+      <span class="divider">|</span>
+      <div class="dropdown">
+        <a href="#" class="dropbtn">Our Projects ▼</a>
+        <div class="dropdown-content">
+          <a href="ourprojects.html">All Projects</a>
+          <a href="offshore.html">Offshore Projects</a>
+          <a href="onshore.html">Onshore Projects</a>
+        </div>
+      </div>
+      <span class="divider">|</span>
+      <a href="rig-fleet.html">Rig Fleet</a>
+      <span class="divider">|</span>
+      <a href="hse.html">HSE</a>
+      <span class="divider">|</span>
+      <a href="careers.html" class="active">Careers</a>
+    </nav>
+  </header>
+
+  <main class="page-container">
+    <div class="main-content">
+      <h1 class="page-title fade-in-section">Join Our Team</h1>
+
+      <section class="content-card fade-in-section">
+        <h2>Job Opportunities</h2>
+        <div class="job-accordion">
+            
+            <h3>Head Office & Professional</h3>
+            <details>
+                <summary>Drilling Engineer</summary>
+                <div class="qualifications">
+                    <ul>
+                        <li>Bachelor's degree in Petroleum Engineering, Geology, Mechanical Engineering, or a related field.</li>
+                        <li>Minimum 5 years of experience in the oil and gas industry.</li>
+                        <li>Strong understanding of drilling operations and oil & gas regulations in Indonesia.</li>
+                        <li>Proficient in drilling engineering software.</li>
+                        <li>Excellent analytical and communication skills.</li>
+                        <li>Willing to be placed in the designated work location.</li>
+                    </ul>
+                </div>
+            </details>
+            <details>
+                <summary>Driver (Jakarta Area)</summary>
+                <div class="qualifications">
+                    <ul>
+                        <li>Valid driver's license (SIM A).</li>
+                        <li>Clean driving record.</li>
+                        <li>At least 3 years of professional driving experience.</li>
+                        <li>Physically fit and punctual.</li>
+                        <li>Familiar with Jakarta routes.</li>
+                        <li>Good communication and interpersonal skills.</li>
+                    </ul>
+                </div>
+            </details>
+            <details>
+                <summary>Cashier (Jakarta Area)</summary>
+                <div class="qualifications">
+                    <ul>
+                        <li>Fresh graduate from a financial school (SMK/D3).</li>
+                        <li>Fluent in English.</li>
+                        <li>Familiar with Microsoft Office (Excel, Word).</li>
+                        <li>Have a good attitude and communication skills.</li>
+                        <li>JABODETABEK domicile is preferred.</li>
+                    </ul>
+                </div>
+            </details>
+            <details>
+                <summary>Accounting Assistant</summary>
+                <div class="qualifications">
+                    <ul>
+                        <li>Bachelor's degree in Finance, Accounting, or similar.</li>
+                        <li>Good communication skills.</li>
+                        <li>Possess a strong sense of responsibility and team spirit.</li>
+                        <li>Proficiency in English and Mandarin is preferred.</li>
+                    </ul>
+                </div>
+            </details>
+             <details>
+                <summary>HSE Officer (Specific)</summary>
+                <div class="qualifications">
+                    <ul>
+                        <li>Indonesian citizen.</li>
+                        <li>Bachelor's degree in a relevant field.</li>
+                        <li>Have K3 MIGAS CEPU certificate.</li>
+                        <li>Good communication skills, disciplined, responsible, and proactive.</li>
+                        <li>Able to perform under pressure.</li>
+                        <li>At least 5 years experience as an HSE Officer in oil & gas, or 7 years in other industries.</li>
+                    </ul>
+                </div>
+            </details>
+
+            <h3 style="margin-top: 30px;">General Rig Crew</h3>
+            <details>
+                <summary>Multiple Positions (Rig Superintendent, Toolpusher, Driller, etc.)</summary>
+                <div class="qualifications">
+                    <h4>Positions Available:</h4>
+                    <p class="position-list">Rig Superintendent, Toolpusher, HSE Officer, Chief Electrician, Driller, Top Drive Specialist, Rig Engineer, Materialman, Chief Mechanic.</p>
+                    <h4>Shared Qualifications:</h4>
+                    <ul>
+                        <li>Indonesian citizen.</li>
+                        <li>Good personalities and communication skills.</li>
+                        <li>Valid Oil and Gas certificate (Sertifikat Migas).</li>
+                        <li>Experienced at least 2 years in a 1500 HP drilling rig.</li>
+                        <li>Experience with geothermal rigs is preferable.</li>
+                        <li>Willing to work in remote areas.</li>
+                        <li>Good health and physique.</li>
+                    </ul>
+                </div>
+            </details>
+            
+            <h3 style="margin-top: 30px;">Riau Area (Duri & Surrounding)</h3>
+             <details>
+                <summary>Multiple Positions (Area Manager, Rig Site Manager, etc.)</summary>
+                <div class="qualifications">
+                    <h4>Positions Available:</h4>
+                    <p class="position-list">Area Manager, Rig Superintendent, HSE Officer, Driller, HSE Coordinator, Toolpusher, Rig Site Manager, Materialman, Rig Clerk, Truck Pusher.</p>
+                    <h4>Shared Qualifications:</h4>
+                    <ul>
+                        <li>Warga Negara Indonesia (WNI).</li>
+                        <li>Berdomisili di area Duri dan sekitarnya.</li>
+                        <li>Memiliki komitmen dan kepribadian yang baik.</li>
+                        <li>Memiliki sertifikat Migas dan Internasional yang aktif.</li>
+                        <li>Berpengalaman minimal 2 tahun di drilling rig.</li>
+                    </ul>
+                </div>
+            </details>
+        </div>
+      </section>
+      
+      <section class="content-card how-to-apply fade-in-section">
+          <h2>How to Apply</h2>
+          <p>
+              Please send your resume to <a href="mailto:recruitment@gdap-indo.com"><strong>recruitment@gdap-indo.com</strong></a> with the email subject:
+              <br><strong>[Job Title] - [Your Domicile] - [Your Name]</strong>
+          </p>
+          <p style="margin-top: 20px; font-size: 14px;">
+              For other information or the latest updates, follow our official Instagram account: <a href="https://www.instagram.com/gdapofficial" target="_blank"><strong>@gdapofficial</strong></a>.
+          </p>
+      </section>
+
+    </div>
+  </main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const sections = document.querySelectorAll('.fade-in-section');
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+  };
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  sections.forEach(section => {
+    observer.observe(section);
+  });
+});
+</script>
+
+</body>
+</html>

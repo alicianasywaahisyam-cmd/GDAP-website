@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rig Fleet - GDAP</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       1. GLOBAL STYLES & RESET
+       ========================================================================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-image: linear-gradient(135deg, #eaf2f8 0%, #f8f9fa 100%);
+      color: #333;
+      line-height: 1.6;
+    }
+    
+    h1, h2, h3, h4, h5, h6, .company-name {
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    /* ==========================================================================
+       2. NAVBAR (Gaya Korporat Baru)
+       ========================================================================== */
+    .navbar {
+      display: flex; align-items: center; justify-content: space-between;
+      background-color: #fff; border-bottom: 1px solid #ddd;
+      padding: 10px 40px; position: sticky; top: 0; z-index: 1001;
+    }
+    .navbar-left { display: flex; align-items: center; gap: 15px; }
+    .logo-img { height: 60px; }
+    .company-name { 
+        font-size: 17px; font-weight: 700; color: #112a45; line-height: 1.2;
+    }
+    .company-name .sub-line {
+        font-size: 0.9em; font-weight: 600; color: #555;
+    }
+    .navbar-right { display: flex; align-items: center; gap: 10px; }
+    .navbar-right a, .dropbtn {
+      text-decoration: none; color: #112a45; font-size: 14px; font-weight: 600;
+      padding: 8px 12px; border-radius: 6px; transition: background-color 0.3s, color 0.3s;
+      white-space: nowrap;
+    }
+    .navbar-right a:hover, .dropbtn:hover {
+      background-color: #fef0e8;
+      color: #F37021;
+    }
+    .navbar-right a.active {
+        background-color: #F37021;
+        color: #fff;
+    }
+    .divider { color: #ddd; }
+    .dropdown { position: relative; }
+    .dropdown-content {
+      display: none; position: absolute; top: 110%; left: 0;
+      background-color: rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px);
+      min-width: 200px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      border-radius: 10px; padding: 8px; opacity: 0;
+      transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .dropdown:hover .dropdown-content { display: block; opacity: 1; transform: translateY(0); }
+    .dropdown-content a { display: block; padding: 10px 15px; color: #112a45; font-weight: 400; font-size: 14px; border-radius: 6px; }
+    .dropdown-content a:hover { background-color: #F37021; color: #fff; }
+
+    /* ==========================================================================
+       3. STYLING KONTEN & EFEK TRANSISI
+       ========================================================================== */
+    .page-section, .rig-table-container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 30px;
+    }
+
+    .page-section h2 {
+      color: #112a45;
+      font-size: 28px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 10px;
+    }
+
+    .fade-in-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .fade-in-section.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .search-container { margin-bottom: 20px; }
+    #rigSearchInput {
+      width: 100%; padding: 12px 15px; border: 1px solid #ddd;
+      border-radius: 6px; font-size: 16px; transition: all 0.3s;
+      font-family: 'Inter', sans-serif;
+    }
+    #rigSearchInput:focus {
+      border-color: #F37021; box-shadow: 0 0 8px rgba(243, 112, 33, 0.2); outline: none;
+    }
+
+    .rig-table-wrapper { 
+      overflow-x: auto; 
+      border-radius: 8px; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+    }
+    .rig-table { width: 100%; border-collapse: collapse; background: #fff; }
+    .rig-table th, .rig-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid #eee; white-space: nowrap; }
+    .rig-table th {
+      background-color: #112a45; font-weight: 700; color: #fff;
+      position: sticky; top: 0; z-index: 10;
+    }
+    .rig-table tbody tr:nth-child(even) { background-color: #f8f9fa; }
+    .rig-table tbody tr:hover { background-color: #e9ecef; }
+    .rig-table tbody tr:last-child td { border-bottom: none; }
+    .status-badge {
+      padding: 4px 12px; border-radius: 12px; font-weight: 600;
+      font-size: 12px; color: #fff; background-color: #28a745;
+    }
+    .status-badge.unavailable { background-color: #dc3545; }
+
+    /* --- Styling Accordion Utama --- */
+    .page-section details {
+      background: #fff; border-radius: 8px; margin-bottom: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid #eef;
+      transition: all 0.3s ease; overflow: hidden;
+    }
+    .page-section details:hover { box-shadow: 0 6px 16px rgba(0,0,0,0.08); transform: translateY(-2px); }
+    .page-section summary {
+      cursor: pointer; padding: 18px 20px; font-size: 18px;
+      font-weight: 700; color: #112a45; list-style: none;
+    }
+    .page-section summary::-webkit-details-marker { display: none; }
+    .page-section summary::before {
+      content: '▶'; margin-right: 10px; font-size: 12px;
+      color: #F37021; transition: transform 0.3s; display: inline-block;
+    }
+    .page-section details[open] > summary::before { transform: rotate(90deg); }
+    .accordion-content { padding: 10px 20px 20px 40px; }
+
+    /* --- REVISI: Styling untuk Nested Accordion --- */
+    .nested-accordion {
+        background: #f8f9fa;
+        border: 1px solid #eee;
+        border-radius: 6px;
+        margin: 10px 0;
+    }
+    .nested-accordion summary {
+        font-size: 16px;
+        font-weight: 600;
+        padding: 12px 15px;
+    }
+    .nested-accordion .nested-content {
+        padding: 0 15px 15px 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    .spec-item {
+        border-bottom: 1px solid #e9ecef;
+        padding-bottom: 10px;
+    }
+    .spec-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+    .spec-item h4 {
+        font-size: 15px;
+        font-weight: 700;
+        color: #112a45;
+        margin-bottom: 5px;
+    }
+    .spec-item p {
+        font-size: 14px;
+        color: #555;
+        white-space: pre-line; /* Menjaga line break dari teks */
+    }
+
+    /* ==========================================================================
+       4. RESPONSIVE DESIGN
+       ========================================================================== */
+    @media(max-width:900px){
+      .navbar { flex-direction: column; gap: 15px; padding: 15px; }
+      .navbar-right { flex-wrap:wrap; justify-content:center; gap:10px; font-size:13px; }
+      .page-section, .rig-table-container { padding: 0 15px; margin: 25px auto; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="navbar-left">
+    <a href="index.html"><img src="GDAP2.jpeg" alt="GDAP Logo" class="logo-img"></a>
+    <div class="company-name">
+      <span>Greatwall Drilling</span>
+      <span class="sub-line">Asia Pacific</span>
+    </div>
+  </div>
+  <nav class="navbar-right">
+    <div class="dropdown">
+      <a href="#" class="dropbtn">About Us ▼</a>
+      <div class="dropdown-content">
+        <a href="glance.html">GDAP at a glance</a>
+        <a href="location.html">Location</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <span class="divider">|</span>
+    <div class="dropdown">
+      <a href="#" class="dropbtn">Our Services ▼</a>
+      <div class="dropdown-content">
+        <a href="drillingrig.html">Drilling Rig</a>
+        <a href="mud.html">Mud</a>
+        <a href="cementing.html">Cementing</a>
+      </div>
+    </div>
+    <span class="divider">|</span>
+    <div class="dropdown">
+      <a href="#" class="dropbtn">Our Projects ▼</a>
+      <div class="dropdown-content">
+        <a href="ourprojects.html">All Projects</a>
+        <a href="offshore.html">Offshore Projects</a>
+        <a href="onshore.html">Onshore Projects</a>
+      </div>
+    </div>
+    <span class="divider">|</span>
+    <a href="rig-fleet.html" class="active">Rig Fleet</a>
+    <span class="divider">|</span>
+    <a href="hse.html">HSE</a>
+    <span class="divider">|</span>
+    <a href="careers.html">Careers</a>
+  </nav>
+</header>
+
+<div class="page-section fade-in-section">
+  <h2>GDAP Drilling Rig Fleet</h2>
+  <p>The following is a list of Land Drilling Rigs owned and operated by GDAP:</p>
+</div>
+
+<div class="rig-table-container fade-in-section">
+  <div class="search-container">
+    <input type="text" id="rigSearchInput" placeholder="Filter rigs by name, type, and more…">
+  </div>
+
+  <div class="rig-table-wrapper">
+    <table class="rig-table" id="rigTable">
+      <thead>
+        <tr>
+          <th>Rig</th><th>Power Rate</th><th>Rig Maker</th><th>Availability</th><th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>GW 16</td><td>2000 HP</td><td>Baoji Oilfield Machinery Co., Ltd.</td><td><span class="status-badge">Available</span></td><td>Onshore</td></tr>
+        <tr><td>GW 121</td><td>2000 HP</td><td>Baoji Oilfield Machinery Co.,Ltd,</td><td><span class="status-badge">Available</span></td><td>Onshore</td></tr>
+        <tr><td>GW 123</td><td>2000 HP</td><td>Shengli Oilfield Highland Petroleum Equipment Co., Ltd</td><td><span class="status-badge">Available</span></td><td>Onshore</td></tr>
+        <tr><td>GW 207</td><td>2000 HP</td><td> Baoji Oilfield Machinery Co., Ltd.</td><td><span class="status-badge">Available</span></td><td>Onshore</td></tr>
+        <tr><td>GW 265</td><td>2000 HP</td><td> China Petroleum Liaohe Equipment Company</td><td><span class="status-badge">Available</span></td><td>Onshore</td></tr>
+        <tr><td>GW 336</td><td>-</td><td>-</td><td><span class="status-badge">Available</span></td><td>Onshore</td></tr>
+        <tr><td>GW 337</td><td>-</td><td>-</td><td><span class="status-badge">Available</span></td><td>Onshore</td></tr>
+        <tr><td>GW 338</td><td>-</td><td>-</td><td><span class="status-badge">Available</span></td><td>Onshore</td></tr>
+        <tr><td>GW 339</td><td>-</td><td>-</td><td><span class="status-badge">Available</span></td><td>Onshore</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="page-section fade-in-section">
+  <h2>Rig Specification Details</h2>
+  
+  <details>
+    <summary><strong>GW 16</strong> (2000 HP Land Rig)</summary>
+    <div class="accordion-content">
+
+      <details class="nested-accordion">
+        <summary>Hoisting System</summary>
+        <div class="nested-content">
+          <div class="spec-item">
+            <h4>Mast</h4>
+            <p>Manufacture: Baoji Oilfield Machinery Co., Ltd.
+Type: Land Rig
+Model: JJ450/45-K5
+Serial Number: 4500-01
+Height: 46,5 meter
+Max. Hook Load: 449 Metric Ton (4500 KN)</p>
+          </div>
+          <div class="spec-item">
+            <h4>Substructure</h4>
+            <p>Manufacture: Baoji Oilfield Machinery Co., Ltd.
+Model: DZ450/9-S4
+Height: 9 meter</p>
+          </div>
+          <div class="spec-item">
+            <h4>Drawworks</h4>
+            <p>Manufacture: Baoji Oilfield Machinery Co., Ltd.
+Model: JC-70D
+Power: 2000 HP</p>
+          </div>
+           <div class="spec-item">
+            <h4>Crown Block</h4>
+            <p>Manufacture: Baoji Oilfield Machinery Co., Ltd.
+Model: TC7-450
+Capacity: 4500 KN</p>
+          </div>
+        </div>
+      </details>
+
+      <details class="nested-accordion">
+        <summary>Rotating System</summary>
+        <div class="nested-content">
+           <div class="spec-item">
+            <h4>Top Drive</h4>
+            <p>Manufacture: National Oilwell Varco
+Model: TDS-11HD
+Capacity: 500 Ton</p>
+          </div>
+           <div class="spec-item">
+            <h4>Rotary Table</h4>
+            <p>Manufacture: Shengli Oilfield Highland Petroleum Equipment Co., Ltd.
+Model: ZP375
+Max Rated Static Rotary Capacity: 5850 KN</p>
+          </div>
+        </div>
+      </details>
+
+      <details class="nested-accordion">
+        <summary>Well Control System</summary>
+        <div class="nested-content">
+          <div class="spec-item">
+            <h4>Annular BOP</h4>
+            <p>1. Annular 13-5/8” x 5000 psi, Manufacture: Rongsheng
+2. Annular 20-3/4” x 3000 psi, Manufacture: Rongsheng
+3. Diverter 29-1/2” x 500 psi, Manufacture: Rongsheng</p>
+          </div>
+           <div class="spec-item">
+            <h4>Ram BOP</h4>
+            <p>Single Ram 13-5/8” x 10000 psi
+Double Ram 13-5/8” x 10000 psi
+Double Ram 20-3/4” x 3000 psi</p>
+          </div>
+        </div>
+      </details>
+      
+      <details class="nested-accordion">
+        <summary>Power System</summary>
+        <div class="nested-content">
+          <div class="spec-item">
+            <h4>Engine Prime Mover</h4>
+            <p>Manufacture: Caterpillar
+Model: CAT 3512, 4 ea
+Power: 1090 kW at 1500 RPM</p>
+          </div>
+           <div class="spec-item">
+            <h4>Generator Set</h4>
+            <p>Manufacture: Caterpillar
+Volts / Amps: 600 V, 1374 A, Phase: 3</p>
+          </div>
+        </div>
+      </details>
+      
+    </div>
+  </details>
+  </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  
+  // Fitur 1: Live Search untuk Tabel
+  const searchInput = document.getElementById('rigSearchInput');
+  const table = document.getElementById('rigTable');
+  const tableRows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+  searchInput.addEventListener('keyup', function() {
+    const filter = searchInput.value.toLowerCase();
+    for (let row of tableRows) {
+      let match = row.textContent.toLowerCase().includes(filter);
+      row.style.display = match ? "" : "none";
+    }
+  });
+
+  // Fitur 2: Efek Transisi Fade-in saat Scroll
+  const sections = document.querySelectorAll('.fade-in-section');
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+  };
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  sections.forEach(section => {
+    observer.observe(section);
+  });
+
+});
+</script>
+
+</body>
+</html>

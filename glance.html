@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GDAP at a Glance</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ==========================================================================
+       1. GLOBAL STYLES & RESET
+       ========================================================================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Inter', sans-serif;
+      background-color: #fff;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3, h4, h5, h6, .company-name, .cta-button, .stat-number {
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    /* ==========================================================================
+       2. NAVBAR (Gaya Korporat)
+       ========================================================================== */
+    .navbar {
+      display: flex; align-items: center; justify-content: space-between;
+      background-color: #fff; border-bottom: 1px solid #ddd;
+      padding: 10px 40px; position: sticky; top: 0; z-index: 1000;
+      flex-shrink: 0;
+    }
+    .navbar-left { display: flex; align-items: center; gap: 15px; }
+    .logo-img { height: 60px; }
+    .company-name { 
+        font-size: 17px; font-weight: 700; color: #112a45; line-height: 1.2;
+    }
+    .company-name .sub-line {
+        font-size: 0.9em; font-weight: 600; color: #555;
+    }
+    .navbar-right { display: flex; align-items: center; gap: 10px; }
+    .navbar-right a, .dropbtn {
+      text-decoration: none; color: #112a45; font-size: 14px; font-weight: 600;
+      padding: 8px 12px; border-radius: 6px; transition: background-color 0.3s, color 0.3s;
+    }
+    .navbar-right a:hover, .dropbtn:hover {
+      background-color: #fef0e8; color: #F37021;
+    }
+    .navbar-right a.active {
+        background-color: #F37021; color: #fff;
+    }
+    .divider { color: #ddd; }
+    .dropdown { position: relative; }
+    .dropdown-content {
+      display: none; position: absolute; top: 110%; left: 0;
+      background-color: rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px);
+      min-width: 200px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      border-radius: 10px; padding: 8px; opacity: 0;
+      transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .dropdown:hover .dropdown-content { display: block; opacity: 1; transform: translateY(0); }
+    .dropdown-content a { display: block; padding: 10px 15px; color: #112a45; font-weight: 400; font-size: 14px; border-radius: 6px; }
+    .dropdown-content a:hover { background-color: #F37021; color: #fff; }
+
+    /* ==========================================================================
+       3. STRUKTUR LAYOUT FULL-HEIGHT
+       ========================================================================== */
+    .page-wrapper {
+      display: flex; flex: 1; overflow: hidden;
+    }
+    .sidebar {
+      flex: 0 0 240px; background-color: #fff; padding: 25px;
+      border-right: 1px solid #ddd; overflow-y: auto;
+    }
+    .sidebar strong {
+      display: block; font-size: 18px; color: #112a45; margin-bottom: 15px;
+      padding-bottom: 10px; border-bottom: 2px solid #f0f0f0;
+    }
+    .sidebar a {
+      display: block; text-decoration: none; color: #112a45; padding: 12px 5px;
+      font-weight: 600; border-bottom: 1px solid #f0f0f0; transition: color 0.2s, background-color 0.2s;
+      border-radius: 6px;
+    }
+    .sidebar a:last-child { border-bottom: none; }
+    .sidebar a:hover { color: #F37021; background-color: #f8f9fa; }
+    .sidebar a.active { color: #F37021; font-weight: 700; background-color: #f8f9fa;}
+    .main-content {
+      flex: 1; padding: 40px; overflow-y: auto;
+      background-image: linear-gradient(135deg, #eaf2f8 0%, #f8f9fa 100%);
+    }
+    .content-wrapper {
+      max-width: 960px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 40px;
+    }
+    
+    /* ==========================================================================
+       4. UPGRADED CONTENT STYLES & ANIMATIONS
+       ========================================================================== */
+    .hero-glance {
+      position: relative; padding: 60px 40px; border-radius: 8px; color: white;
+      background: linear-gradient(rgba(17, 42, 69, 0.7), rgba(17, 42, 69, 0.7)), url('GDAP3.jpeg');
+      background-size: cover; background-position: center; overflow: hidden;
+    }
+    .hero-glance h2 {
+      font-size: 32px; margin-bottom: 15px;
+      border-bottom: 2px solid rgba(255,255,255,0.5); padding-bottom: 10px;
+    }
+    .hero-glance p { font-size: 16px; max-width: 90%; line-height: 1.7; }
+
+    .stats-section {
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 30px; background-color: #fff; padding: 30px;
+        border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .stat-item { text-align: center; }
+    .stat-number { font-size: 42px; font-weight: 800; color: #F37021; }
+    .stat-label { display: block; font-size: 14px; color: #555; margin-top: 5px; }
+
+    .values-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+    .content-card {
+      background-color: #fff; padding: 25px 30px; border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .content-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+    .content-card h3 {
+      font-size: 22px; color: #112a45; margin-bottom: 20px;
+      border-bottom: 2px solid #e0e0e0; padding-bottom: 8px;
+    }
+    .info-list { list-style: none; padding: 0; }
+    .info-list li {
+      display: flex; align-items: flex-start; margin-bottom: 15px;
+      padding-left: 35px; position: relative;
+    }
+    .info-list li::before {
+      content: ''; position: absolute; left: 0; top: 5px;
+      width: 20px; height: 20px; background-color: #F37021;
+      -webkit-mask-size: cover; mask-size: cover;
+    }
+    .info-list .icon-innovation::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M12 2C8.691 2 6 4.691 6 8C6 10.142 7.234 12.049 9.002 12.915L9 14H8V16H16V14H15L14.998 12.915C16.766 12.049 18 10.142 18 8C18 4.691 15.309 2 12 2ZM12 4C14.206 4 16 5.794 16 8C16 9.471 15.111 10.769 13.883 11.455L14 12H10L10.117 11.455C8.889 10.769 8 9.471 8 8C8 5.794 9.794 4 12 4Z M11 18H13V22H11V18Z'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M12 2C8.691 2 6 4.691 6 8C6 10.142 7.234 12.049 9.002 12.915L9 14H8V16H16V14H15L14.998 12.915C16.766 12.049 18 10.142 18 8C18 4.691 15.309 2 12 2ZM12 4C14.206 4 16 5.794 16 8C16 9.471 15.111 10.769 13.883 11.455L14 12H10L10.117 11.455C8.889 10.769 8 9.471 8 8C8 5.794 9.794 4 12 4Z M11 18H13V22H11V18Z'/%3E%3C/svg%3E"); }
+    .info-list .icon-safety::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M12 2L3 5V11C3 16.523 7.029 21.5 12 22C16.971 21.5 21 16.523 21 11V5L12 2ZM12 4.09L19 6.556V11C19 15.452 15.955 19.447 12 19.95V19.95C8.045 19.447 5 15.452 5 11V6.556L12 4.09Z'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M12 2L3 5V11C3 16.523 7.029 21.5 12 22C16.971 21.5 21 16.523 21 11V5L12 2ZM12 4.09L19 6.556V11C19 15.452 15.955 19.447 12 19.95V19.95C8.045 19.447 5 15.452 5 11V6.556L12 4.09Z'/%3E%3C/svg%3E"); }
+    .info-list .icon-excellence::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M12 1.5L14.472 8.528H21.5L15.514 13.472L18 20.5L12 15.528L6 20.5L8.486 13.472L2.5 8.528H9.528L12 1.5Z'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M12 1.5L14.472 8.528H21.5L15.514 13.472L18 20.5L12 15.528L6 20.5L8.486 13.472L2.5 8.528H9.528L12 1.5Z'/%3E%3C/svg%3E"); }
+    .info-list .icon-collaboration::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M14 8C14 5.791 12.209 4 10 4C7.791 4 6 5.791 6 8C6 10.209 7.791 12 10 12C12.209 12 14 10.209 14 8ZM12 8C12 9.105 11.105 10 10 10C8.895 10 8 9.105 8 8C8 6.895 8.895 6 10 6C11.105 6 12 6.895 12 8Z M18 10C18 7.791 16.209 6 14 6C13.448 6 13 6.448 13 7C13 7.552 13.448 8 14 8C15.105 8 16 8.895 16 10C16 11.105 15.105 12 14 12C13.448 12 13 12.448 13 13C13 13.552 13.448 14 14 14C16.209 14 18 12.209 18 10Z M13.5 16.606C13.195 16.032 12.766 15.524 12.24 15.132C11.393 14.493 10.246 14.195 9 14.451V17.5C9 17.776 8.776 18 8.5 18H7.5C7.224 18 7 17.776 7 17.5V14.451C5.232 14.846 4 16.242 4 18C4 19.104 4.896 20 6 20H12.236C12.428 19.348 12.836 18.784 13.364 18.356C13.805 18.004 14.328 17.741 14.903 17.585C14.482 17.299 14.015 16.932 13.5 16.606Z'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M14 8C14 5.791 12.209 4 10 4C7.791 4 6 5.791 6 8C6 10.209 7.791 12 10 12C12.209 12 14 10.209 14 8ZM12 8C12 9.105 11.105 10 10 10C8.895 10 8 9.105 8 8C8 6.895 8.895 6 10 6C11.105 6 12 6.895 12 8Z M18 10C18 7.791 16.209 6 14 6C13.448 6 13 6.448 13 7C13 7.552 13.448 8 14 8C15.105 8 16 8.895 16 10C16 11.105 15.105 12 14 12C13.448 12 13 12.448 13 13C13 13.552 13.448 14 14 14C16.209 14 18 12.209 18 10Z M13.5 16.606C13.195 16.032 12.766 15.524 12.24 15.132C11.393 14.493 10.246 14.195 9 14.451V17.5C9 17.776 8.776 18 8.5 18H7.5C7.224 18 7 17.776 7 17.5V14.451C5.232 14.846 4 16.242 4 18C4 19.104 4.896 20 6 20H12.236C12.428 19.348 12.836 18.784 13.364 18.356C13.805 18.004 14.328 17.741 14.903 17.585C14.482 17.299 14.015 16.932 13.5 16.606Z'/%3E%3C/svg%3E"); }
+    .info-list .icon-mission::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M12 2C6.486 2 2 6.486 2 12C2 17.514 6.486 22 12 22C17.514 22 22 17.514 22 12C22 6.486 17.514 2 12 2ZM12 4C16.411 4 20 7.589 20 12C20 16.411 16.411 20 12 20C7.589 20 4 16.411 4 12C4 7.589 7.589 4 12 4ZM12 6C8.691 6 6 8.691 6 12C6 15.309 8.691 18 12 18C15.309 18 18 15.309 18 12C18 8.691 15.309 6 12 6ZM12 8C14.206 8 16 9.794 16 12C16 14.206 14.206 16 12 16C9.794 16 8 14.206 8 12C8 9.794 9.794 8 12 8Z'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M12 2C6.486 2 2 6.486 2 12C2 17.514 6.486 22 12 22C17.514 22 22 17.514 22 12C22 6.486 17.514 2 12 2ZM12 4C16.411 4 20 7.589 20 12C20 16.411 16.411 20 12 20C7.589 20 4 16.411 4 12C4 7.589 7.589 4 12 4ZM12 6C8.691 6 6 8.691 6 12C6 15.309 8.691 18 12 18C15.309 18 18 15.309 18 12C18 8.691 15.309 6 12 6ZM12 8C14.206 8 16 9.794 16 12C16 14.206 14.206 16 12 16C9.794 16 8 14.206 8 12C8 9.794 9.794 8 12 8Z'/%3E%3C/svg%3E"); }
+    .info-list .icon-vision::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M12 5C5.373 5 2 12 2 12C2 12 5.373 19 12 19C18.627 19 22 12 22 12C22 12 18.627 5 12 5ZM12 7C14.761 7 17 9.239 17 12C17 14.761 14.761 17 12 17C9.239 17 7 14.761 7 12C7 9.239 9.239 7 12 7ZM12 9C10.343 9 9 10.343 9 12C9 13.657 10.343 15 12 15C13.657 15 15 13.657 15 12C15 10.343 13.657 9 12 9Z'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M12 5C5.373 5 2 12 2 12C2 12 5.373 19 12 19C18.627 19 22 12 22 12C22 12 18.627 5 12 5ZM12 7C14.761 7 17 9.239 17 12C17 14.761 14.761 17 12 17C9.239 17 7 14.761 7 12C7 9.239 9.239 7 12 7ZM12 9C10.343 9 9 10.343 9 12C9 13.657 10.343 15 12 15C13.657 15 15 13.657 15 12C15 10.343 13.657 9 12 9Z'/%3E%3C/svg%3E"); }
+    .info-list strong { display: block; color: #112a45; font-weight: 700;}
+    
+    /* REVISI: CTA Card yang lebih keren */
+    .cta-banner {
+        background-color: #112a45;
+        color: #fff;
+        padding: 40px;
+        border-radius: 8px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+    .cta-banner h3 {
+        color: #fff;
+        font-size: 24px;
+        border: none;
+        margin: 0;
+        padding: 0;
+    }
+    .cta-banner p {
+        color: #ffffff;
+        max-width: 600px;
+        margin: 0;
+    }
+    .cta-banner .cta-button {
+        background-color: #ffffffe6;
+        font-family: 'Montserrat', sans-serif;
+        margin-top: 10px;
+    }
+    .cta-banner .cta-button:hover {
+        background-color: #d85d11;
+    }
+
+    .fade-in-section {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .fade-in-section.is-visible { opacity: 1; transform: translateY(0); }
+    
+    /* ==========================================================================
+       5. RESPONSIVE DESIGN
+       ========================================================================== */
+    @media (max-width: 900px) {
+      .navbar { flex-direction: column; padding: 15px 20px; gap: 15px; }
+      .navbar-right { flex-wrap: wrap; justify-content: center; }
+      .page-wrapper { flex-direction: column; }
+      .sidebar { border-right: none; border-bottom: 1px solid #ddd; flex-shrink: 0;}
+      .main-content { padding: 25px 15px; }
+      .values-grid { grid-template-columns: 1fr; }
+      .stats-section { grid-template-columns: 1fr 1fr; }
+      .hero-glance { padding: 40px 25px; }
+      .hero-glance p { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="navbar-left">
+      <a href="index.html"><img src="GDAP2.jpeg" alt="GDAP Logo" class="logo-img"></a>
+      <div class="company-name">
+        <span>Greatwall Drilling</span>
+        <span class="sub-line">Asia Pacific</span>
+      </div>
+    </div>
+    <nav class="navbar-right">
+      <div class="dropdown">
+        <a href="#" class="dropbtn">About Us ▼</a>
+        <div class="dropdown-content">
+          <a href="glance.html">GDAP at a glance</a>
+          <a href="location.html">Location</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+      <span class="divider">|</span>
+      <div class="dropdown">
+        <a href="#" class="dropbtn">Our Services ▼</a>
+        <div class="dropdown-content">
+          <a href="drillingrig.html">Drilling Rig</a>
+          <a href="mud.html">Mud</a>
+          <a href="cementing.html">Cementing</a>
+        </div>
+      </div>
+      <span class="divider">|</span>
+      <div class="dropdown">
+        <a href="#" class="dropbtn">Our Projects ▼</a>
+        <div class="dropdown-content">
+          <a href="ourprojects.html">All Projects</a>
+          <a href="offshore.html">Offshore Projects</a>
+          <a href="onshore.html">Onshore Projects</a>
+        </div>
+      </div>
+      <span class="divider">|</span>
+      <a href="rig-fleet.html">Rig Fleet</a>
+      <span class="divider">|</span>
+      <a href="hse.html">HSE</a>
+      <span class="divider">|</span>
+      <a href="careers.html">Careers</a>
+    </nav>
+  </header>
+
+  <div class="page-wrapper">
+    <aside class="sidebar">
+      <strong>ABOUT US</strong>
+      <a href="glance.html" class="active">GDAP at a glance</a>
+      <a href="location.html">Location</a>
+      <a href="contact.html">Contact</a>
+    </aside>
+
+    <main class="main-content">
+      <div class="content-wrapper">
+        
+        <section class="hero-glance fade-in-section">
+          <h2>Company Overview</h2>
+          <p>As the primary regional subsidiary of Great Wall Drilling Company (GWDC), GDAP delivers high-quality, innovative, and integrated solutions for the global energy industry. Our services cover every stage of the reservoir life cycle, emphasizing health, safety, and environment (HSE) standards and upholding professionalism, integrity, and global collaboration.</p>
+        </section>
+        
+        <section class="stats-section fade-in-section">
+            <div class="stat-item">
+                <span class="stat-number" data-target="20">0</span>
+                <span class="stat-label">Years of Experience</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="150">0</span>
+                <span class="stat-label">Successful Projects</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="35">0</span>
+                <span class="stat-label">Operating Rigs</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="12">0</span>
+                <span class="stat-label">Million+ Man-Hours</span>
+            </div>
+        </section>
+
+        <div class="values-grid">
+          <div class="content-card fade-in-section">
+            <h3>Our Values</h3>
+            <ul class="info-list">
+              <li class="icon-innovation">
+                <div><strong>Innovation:</strong> Continuously developing advanced technologies and solutions.</div>
+              </li>
+              <li class="icon-safety">
+                <div><strong>Safety:</strong> Ensuring high QHSE standards and work safety record.</div>
+              </li>
+              <li class="icon-excellence">
+                <div><strong>Excellence:</strong> Delivering efficient and cost-effective energy solutions.</div>
+              </li>
+              <li class="icon-collaboration">
+                <div><strong>Collaboration:</strong> Fostering teamwork and global partnerships.</div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="content-card fade-in-section">
+            <h3>Our Mission & Vision</h3>
+            <ul class="info-list">
+              <li class="icon-mission">
+                <div><strong>Mission:</strong> To provide top-quality drilling services with safety and efficiency.</div>
+              </li>
+              <li class="icon-vision">
+                <div><strong>Vision:</strong> To be a global leader in petroleum engineering services and energy solutions.</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+        <section class="cta-banner fade-in-section">
+            <h3>Our Parent Company</h3>
+            <p>GDAP is proud to be part of the global Great Wall Drilling Company (GWDC) family, a world leader in integrated energy services.</p>
+            <a href="http://www.gwdc.com.cn/" class="cta-button" target="_blank">Visit GWDC Global Website</a>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const sections = document.querySelectorAll('.fade-in-section');
+  
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  sections.forEach(section => {
+    observer.observe(section);
+  });
+
+  const counterObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = +el.getAttribute('data-target');
+        let currentNumber = 0;
+        
+        const updateCount = () => {
+            const increment = Math.ceil(target / 100); // Count up in 100 steps
+            currentNumber += increment;
+
+            if (currentNumber < target) {
+                el.innerText = currentNumber;
+                requestAnimationFrame(updateCount);
+            } else {
+                el.innerText = target;
+            }
+        };
+        requestAnimationFrame(updateCount);
+        
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.8 });
+  
+  const statNumbers = document.querySelectorAll('.stat-number');
+  statNumbers.forEach(number => {
+      counterObserver.observe(number);
+  });
+
+});
+</script>
+
+</body>
+</html>

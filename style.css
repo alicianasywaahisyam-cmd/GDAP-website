@@ -1,0 +1,279 @@
+/* ==========================================================================
+   1. GLOBAL STYLES & RESET
+   - Aturan dasar untuk seluruh halaman (font, warna background, reset).
+   ========================================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f6f8;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   2. NAVBAR
+   - Styling untuk header dan navigasi utama. Konsisten untuk semua halaman.
+   ========================================================================== */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 40px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo-img {
+  height: 60px;
+}
+
+.company-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #112a45;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-right a,
+.dropbtn {
+  text-decoration: none;
+  color: #112a45;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.navbar-right a:hover,
+.dropbtn:hover,
+.navbar-right a.active {
+  background-color: #c9149f;
+  color: #fff;
+}
+
+.divider {
+  color: #ddd;
+}
+
+/* --- Dropdown Modern --- */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 110%; /* Sedikit jarak dari tombol */
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  min-width: 200px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  padding: 8px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 10px 15px;
+  color: #112a45;
+  font-weight: 500;
+  border-radius: 6px;
+}
+
+.dropdown-content a:hover {
+  background-color: #c9149f;
+  color: #fff;
+}
+
+
+/* ==========================================================================
+   3. GENERAL LAYOUT
+   - Struktur utama halaman (container, sidebar, content). Bisa dipakai di
+     halaman "About Us", "Services", "Projects", "HSE", dll.
+   ========================================================================== */
+.page-container {
+  display: flex;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.sidebar {
+  flex: 0 0 220px; /* Lebar sidebar tetap */
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  align-self: flex-start; /* Membuat sidebar tidak meregang ke bawah */
+  position: sticky;
+  top: 100px; /* Jarak dari atas setelah navbar */
+}
+
+.sidebar strong {
+  display: block;
+  font-size: 18px;
+  color: #112a45;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.sidebar a {
+  display: block;
+  text-decoration: none;
+  color: #112a45;
+  padding: 10px 0;
+  font-weight: 500;
+  border-bottom: 1px solid #f0f0f0;
+  transition: color 0.2s;
+}
+
+.sidebar a:last-child {
+  border-bottom: none;
+}
+
+.sidebar a:hover {
+  color: #c9149f;
+}
+
+.sidebar a.active {
+  color: #c9149f;
+  font-weight: 700;
+}
+
+.main-content {
+  flex: 1; /* Mengisi sisa ruang */
+  display: flex;
+  flex-direction: column;
+  gap: 30px; /* Jarak antar card/section di dalam konten */
+}
+
+/* ==========================================================================
+   4. CONTENT COMPONENTS
+   - Styling untuk elemen-elemen di dalam konten utama (card, tabel, dll).
+   ========================================================================== */
+
+/* --- Card/Section Umum --- */
+.content-card {
+  background-color: #fff;
+  padding: 25px 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.content-card h2 {
+  font-size: 24px;
+  color: #112a45;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 8px;
+}
+
+.content-card p {
+  margin-bottom: 15px;
+}
+
+.content-card ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.content-card ul li {
+  margin-bottom: 10px;
+}
+
+/* --- Project Cards (Layout Grid) --- */
+.projects-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.project-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    width: calc(50% - 10px); /* 2 kartu per baris */
+}
+
+/* --- Tabel --- */
+.rig-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.rig-table th,
+.rig-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+.rig-table th {
+  background-color: #f2f2f2;
+  color: #112a45;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   5. RESPONSIVE DESIGN
+   - Penyesuaian untuk layar kecil seperti tablet dan handphone.
+   ========================================================================== */
+@media (max-width: 900px) {
+  .navbar {
+    flex-direction: column;
+    padding: 15px 20px;
+    gap: 15px;
+  }
+
+  .navbar-right {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .page-container {
+    flex-direction: column;
+    margin-top: 20px;
+  }
+
+  .sidebar {
+    position: static; /* Hapus sticky di mobile */
+    width: 100%;
+  }
+
+  .project-card {
+    width: 100%; /* 1 kartu per baris di mobile */
+  }
+}
